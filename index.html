@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PvZ Heroes Simulator</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>PvZ Heroes Simulator</h1>
+        <nav>
+            <button class="nav-btn active" data-tab="deckbuilder">Deck Builder</button>
+            <button class="nav-btn" data-tab="battle">Battle</button>
+            <button class="nav-btn" data-tab="ai-helper">AI Helper</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- DECK BUILDER TAB -->
+        <section id="deckbuilder" class="tab-content active">
+            <div class="deck-builder-layout">
+                <div class="hero-select">
+                    <h2>Choose Hero</h2>
+                    <div id="hero-list" class="card-grid hero-grid"></div>
+                </div>
+                <div class="deck-panel">
+                    <h2>Your Deck <span id="deck-count">0/40</span></h2>
+                    <div id="deck-list" class="deck-list"></div>
+                    <div class="deck-actions">
+                        <button id="save-deck" class="btn btn-primary">Save Deck</button>
+                        <button id="clear-deck" class="btn btn-danger">Clear</button>
+                        <button id="export-deck" class="btn">Export</button>
+                        <button id="import-deck" class="btn">Import</button>
+                    </div>
+                </div>
+                <div class="card-collection">
+                    <h2>Card Collection</h2>
+                    <div class="filter-bar">
+                        <input type="text" id="card-search" placeholder="Search cards...">
+                        <select id="filter-class">
+                            <option value="all">All Classes</option>
+                            <option value="galactic">Galactic</option>
+                            <option value="kabloom">Kabloom</option>
+                            <option value="mega-grow">Mega-Grow</option>
+                            <option value="smart">Smarty</option>
+                            <option value="solar">Solar</option>
+                            <option value="brainy">Brainy</option>
+                            <option value="crazy">Crazy</option>
+                            <option value="hearty">Hearty</option>
+                            <option value="sneaky">Sneaky</option>
+                        </select>
+                        <select id="filter-type">
+                            <option value="all">All Types</option>
+                            <option value="plant">Plants</option>
+                            <option value="zombie">Zombies</option>
+                            <option value="trick">Tricks</option>
+                        </select>
+                        <select id="filter-cost">
+                            <option value="all">Any Cost</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7+">7+</option>
+                        </select>
+                    </div>
+                    <div id="card-grid" class="card-grid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BATTLE TAB -->
+        <section id="battle" class="tab-content">
+            <div class="battle-setup" id="battle-setup">
+                <h2>Battle Setup</h2>
+                <div class="battle-config">
+                    <div class="config-side">
+                        <h3>Your Hero</h3>
+                        <div id="player-hero-select" class="card-grid hero-grid small"></div>
+                    </div>
+                    <div class="vs-divider">VS</div>
+                    <div class="config-side">
+                        <h3>Enemy Hero</h3>
+                        <div id="enemy-hero-select" class="card-grid hero-grid small"></div>
+                    </div>
+                </div>
+                <div class="difficulty-select">
+                    <label>AI Difficulty:</label>
+                    <select id="ai-difficulty">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+                <button id="start-battle" class="btn btn-primary btn-large">Start Battle!</button>
+            </div>
+
+            <div class="battlefield" id="battlefield" style="display:none;">
+                <div class="battle-header">
+                    <div class="hero-info enemy-hero">
+                        <div id="enemy-hero-portrait" class="hero-portrait"></div>
+                        <div class="hero-stats">
+                            <span id="enemy-hero-name"></span>
+                            <span id="enemy-hero-hp" class="hp">20/20</span>
+                            <span id="enemy-brains">Brains: 0/0</span>
+                        </div>
+                    </div>
+                    <div class="turn-info">
+                        <span id="turn-counter">Turn 1</span>
+                        <span id="phase-indicator">Draw Phase</span>
+                    </div>
+                    <div class="hero-info player-hero">
+                        <div class="hero-stats">
+                            <span id="player-hero-name"></span>
+                            <span id="player-hero-hp" class="hp">20/20</span>
+                            <span id="player-sun">Sun: 1/1</span>
+                        </div>
+                        <div id="player-hero-portrait" class="hero-portrait"></div>
+                    </div>
+                </div>
+
+                <div class="board">
+                    <div class="board-half zombie-side">
+                        <div class="lane" data-lane="0"><div class="lane-number">1</div><div class="zombie-slot" data-lane="0" data-side="zombie"></div></div>
+                        <div class="lane" data-lane="1"><div class="lane-number">2</div><div class="zombie-slot" data-lane="1" data-side="zombie"></div></div>
+                        <div class="lane" data-lane="2"><div class="lane-number">3</div><div class="zombie-slot" data-lane="2" data-side="zombie"></div></div>
+                        <div class="lane" data-lane="3"><div class="lane-number">4</div><div class="zombie-slot" data-lane="3" data-side="zombie"></div></div>
+                        <div class="lane" data-lane="4"><div class="lane-number">5</div><div class="zombie-slot" data-lane="4" data-side="zombie"></div></div>
+                    </div>
+                    <div class="board-divider"></div>
+                    <div class="board-half plant-side">
+                        <div class="lane" data-lane="0"><div class="plant-slot" data-lane="0" data-side="plant"></div></div>
+                        <div class="lane" data-lane="1"><div class="plant-slot" data-lane="1" data-side="plant"></div></div>
+                        <div class="lane" data-lane="2"><div class="plant-slot" data-lane="2" data-side="plant"></div></div>
+                        <div class="lane" data-lane="3"><div class="plant-slot" data-lane="3" data-side="plant"></div></div>
+                        <div class="lane" data-lane="4"><div class="plant-slot" data-lane="4" data-side="plant"></div></div>
+                    </div>
+                </div>
+
+                <div class="battle-controls">
+                    <button id="end-turn" class="btn btn-primary">End Turn</button>
+                    <button id="battle-menu" class="btn">Menu</button>
+                </div>
+
+                <div class="hand-area">
+                    <h3>Your Hand</h3>
+                    <div id="player-hand" class="hand"></div>
+                </div>
+
+                <div class="enemy-hand-area">
+                    <h3>Enemy Hand</h3>
+                    <div id="enemy-hand" class="hand enemy"></div>
+                </div>
+            </div>
+
+            <div class="battle-log" id="battle-log" style="display:none;">
+                <h3>Battle Log</h3>
+                <div id="log-entries" class="log-entries"></div>
+            </div>
+
+            <div class="game-over-screen" id="game-over" style="display:none;">
+                <h2 id="game-result"></h2>
+                <div id="game-stats"></div>
+                <button id="play-again" class="btn btn-primary">Play Again</button>
+                <button id="back-to-menu" class="btn">Main Menu</button>
+            </div>
+        </section>
+
+        <!-- AI HELPER TAB -->
+        <section id="ai-helper" class="tab-content">
+            <div class="ai-helper-layout">
+                <div class="ai-panel">
+                    <h2>AI Deck Advisor</h2>
+                    <div class="ai-input">
+                        <label>Select a hero:</label>
+                        <select id="ai-hero-select"></select>
+                        <label>Playstyle:</label>
+                        <select id="ai-playstyle">
+                            <option value="aggressive">Aggressive</option>
+                            <option value="control">Control</option>
+                            <option value="tempo">Tempo</option>
+                            <option value="combo">Combo</option>
+                        </select>
+                        <button id="ai-suggest-deck" class="btn btn-primary">Suggest Deck</button>
+                    </div>
+                    <div id="ai-deck-suggestion" class="ai-suggestion"></div>
+                </div>
+                <div class="ai-panel">
+                    <h2>AI Play Advisor</h2>
+                    <p class="ai-description">Describe your current battle state and get AI recommendations.</p>
+                    <div class="ai-input">
+                        <label>Your hero HP:</label>
+                        <input type="number" id="ai-player-hp" value="20" min="0" max="40">
+                        <label>Enemy hero HP:</label>
+                        <input type="number" id="ai-enemy-hp" value="20" min="0" max="40">
+                        <label>Available resources:</label>
+                        <input type="number" id="ai-resources" value="3" min="0" max="20">
+                        <label>Hand size:</label>
+                        <input type="number" id="ai-hand-size" value="4" min="0" max="10">
+                    </div>
+                    <div id="ai-board-state">
+                        <h3>Board State (optional)</h3>
+                        <div class="ai-board-input">
+                            <div class="lane-input" data-lane="0">
+                                <span>Lane 1:</span>
+                                <input type="text" placeholder="e.g., Peashooter 2/1" class="ai-plant-input">
+                                <input type="text" placeholder="e.g., Zombie 1/1" class="ai-zombie-input">
+                            </div>
+                            <div class="lane-input" data-lane="1">
+                                <span>Lane 2:</span>
+                                <input type="text" placeholder="e.g., Sunflower 1/1" class="ai-plant-input">
+                                <input type="text" placeholder="e.g., Conehead 2/3" class="ai-zombie-input">
+                            </div>
+                            <div class="lane-input" data-lane="2">
+                                <span>Lane 3:</span>
+                                <input type="text" placeholder="" class="ai-plant-input">
+                                <input type="text" placeholder="" class="ai-zombie-input">
+                            </div>
+                            <div class="lane-input" data-lane="3">
+                                <span>Lane 4:</span>
+                                <input type="text" placeholder="" class="ai-plant-input">
+                                <input type="text" placeholder="" class="ai-zombie-input">
+                            </div>
+                            <div class="lane-input" data-lane="4">
+                                <span>Lane 5:</span>
+                                <input type="text" placeholder="" class="ai-plant-input">
+                                <input type="text" placeholder="" class="ai-zombie-input">
+                            </div>
+                        </div>
+                    </div>
+                    <button id="ai-suggest-play" class="btn btn-primary">Get Recommendation</button>
+                    <div id="ai-play-suggestion" class="ai-suggestion"></div>
+                </div>
+                <div class="ai-panel">
+                    <h2>Card Database</h2>
+                    <div class="ai-input">
+                        <input type="text" id="ai-card-search" placeholder="Look up any card...">
+                    </div>
+                    <div id="ai-card-info" class="ai-card-info"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal" id="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/cards.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/deckbuilder.js"></script>
+    <script src="js/battle.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
