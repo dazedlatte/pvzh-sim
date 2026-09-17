@@ -85,7 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const synergies = AIHelper.getCardSynergies(card.id);
         container.innerHTML = `
             <div style="display:flex;gap:1rem;align-items:flex-start">
-                <div style="font-size:2rem">${card.icon}</div>
+                <div style="width:64px;height:64px;border-radius:8px;overflow:hidden;background:rgba(0,0,0,0.2);flex-shrink:0">
+                    <img src="${card.img || ''}" alt="${card.name}" style="width:100%;height:100%;object-fit:contain" onerror="this.style.display='none';this.parentElement.innerHTML+='<div style=\\'font-size:2rem;display:flex;align-items:center;justify-content:center;height:100%\\'>🃏</div>'">
+                </div>
                 <div>
                     <h3 style="margin-bottom:0.25rem">${card.name}</h3>
                     <p style="color:var(--text-secondary);font-size:0.85rem">${card.desc || card.description || 'No description'}</p>

@@ -19,6 +19,18 @@ const Battle = {
         document.getElementById('game-over').style.display = 'none';
     },
 
+    isPlantHero(heroId) {
+        const hero = CARD_DATA.heroes.find(h => h.id === heroId);
+        if (!hero) return false;
+        return hero.classes.some(c => ['kabloom','guardian','mega-grow','solar','smarty'].includes(c));
+    },
+
+    isZombieHero(heroId) {
+        const hero = CARD_DATA.heroes.find(h => h.id === heroId);
+        if (!hero) return false;
+        return hero.classes.some(c => ['beastly','brainy','crazy','hearty','sneaky'].includes(c));
+    },
+
     startBattle() {
         const playerHeroEl = document.querySelector('#player-hero-select .card.selected');
         const enemyHeroEl = document.querySelector('#enemy-hero-select .card.selected');
@@ -30,6 +42,21 @@ const Battle = {
         this.selectedPlayerHero = playerHeroEl.dataset.heroId;
         this.selectedEnemyHero = enemyHeroEl.dataset.heroId;
         this.aiDifficulty = document.getElementById('ai-difficulty').value;
+
+        // Enforce plant vs zombie
+        const playerIsPlant = this.isPlantHero(this.selectedPlayerHero);
+        const playerIsZombie = this.isZombieHero(this.selectedPlayerHero);
+        const enemyIsPlant = this.isPlantHero(this.selectedEnemyHero);
+        const enemyIsZombie = this.isZombieHero(this.selectedEnemyHero);
+
+        if (playerIsPlant && enemyIsPlant) {
+            DeckBuilder.showToast('Plant vs Plant is not allowed! Pick a Zombie hero for the enemy.', 'error');
+            return;
+        }
+        if (playerIsZombie && enemyIsZombie) {
+            DeckBuilder.showToast('Zombie vs Zombie is not allowed! Pick a Plant hero for the enemy.', 'error');
+            return;
+        }
 
         const playerHero = CARD_DATA.heroes.find(h => h.id === this.selectedPlayerHero);
         const enemyHero = CARD_DATA.heroes.find(h => h.id === this.selectedEnemyHero);
@@ -830,12 +857,12 @@ const Battle = {
         const s = this.state;
 
         // Hero info
-        document.getElementById('player-hero-portrait').textContent = s.player.hero.icon;
+        document.getElementById('player-hero-portrait').innerHTML = `<img src="${s.player.hero.img || ''}" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:50%" onerror="this.parentElement.textContent='${s.player.hero.icon||'?'}'">`;
         document.getElementById('player-hero-name').textContent = s.player.hero.name;
         document.getElementById('player-hero-hp').textContent = `${Math.max(0, s.player.hero.currentHP)}/${s.player.hero.hp}`;
         document.getElementById('player-sun').textContent = `Sun: ${s.player.sun}/${s.player.maxSun}`;
 
-        document.getElementById('enemy-hero-portrait').textContent = s.enemy.hero.icon;
+        document.getElementById('enemy-hero-portrait').innerHTML = `<img src="${s.enemy.hero.img || ''}" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:50%" onerror="this.parentElement.textContent='${s.enemy.hero.icon||'?'}'">`;
         document.getElementById('enemy-hero-name').textContent = s.enemy.hero.name;
         document.getElementById('enemy-hero-hp').textContent = `${Math.max(0, s.enemy.hero.currentHP)}/${s.enemy.hero.hp}`;
         document.getElementById('enemy-brains').textContent = `Brains: ${s.enemy.brains}/${s.enemy.maxBrains}`;
@@ -875,7 +902,9 @@ const Battle = {
             el.className = `card card-${card.type} ${canPlay ? 'playable' : ''}`;
             el.innerHTML = `
                 <div class="card-cost" style="background:${CARD_DATA.classColors[card.class] || '#666'}">${card.cost}</div>
-                <div class="card-icon">${card.icon}</div>
+                <div class="card-img-wrap" style="height:40px">
+                    <img src="${card.img || ''}" alt="${card.name}" class="card-img" onerror="this.style.display='none'">
+                </div>
                 <div class="card-name">${card.name}</div>
                 ${card.attack !== undefined ? `<div class="card-stats">
                     <span class="card-attack">⚔${card.attack}</span>
@@ -916,7 +945,7 @@ const Battle = {
     renderBoardCard(unit) {
         const healthColor = unit.currentHealth < (unit.health || 1) ? 'var(--accent-red)' : '';
         return `<div class="board-card ${unit.owner === 'enemy' ? 'enemy' : ''}">
-            <div class="bc-icon">${unit.icon}</div>
+            <div class="bc-img"><img src="${unit.img || ''}" alt="${unit.name}" style="width:100%;height:100%;object-fit:contain;border-radius:4px" onerror="this.style.display='none';this.parentElement.innerHTML+='${unit.icon || '🃏'}'"></div>
             <div class="bc-name">${unit.name}</div>
             <div class="bc-stats">
                 <span class="card-attack">⚔${unit.currentAttack}</span>
