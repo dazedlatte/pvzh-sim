@@ -184,11 +184,12 @@ const DeckBuilder = {
                     <img src="${card.img}" alt="${card.name}" class="card-img" onerror="this.style.display='none';this.parentElement.innerHTML+='<span class=\\'card-emoji\\'>🃏</span>'">
                 </div>
                 <div class="card-name">${card.name}</div>
+                ${renderTraits(card.traits)}
                 ${card.attack !== undefined ? `<div class="card-stats">
                     <span class="card-attack">⚔${card.attack}</span>
                     <span class="card-health">❤${card.health}</span>
                 </div>` : ''}
-                <div class="card-ability">${card.traits && card.traits.length ? card.traits.join(', ') : ''}</div>
+                <div class="card-ability"></div>
                 ${countInDeck > 0 ? `<div class="deck-entry"><span class="card-count">×${countInDeck}</span></div>` : ''}
             `;
             el.addEventListener('click', () => this.addToDeck(card));

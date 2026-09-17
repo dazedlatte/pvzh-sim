@@ -906,6 +906,7 @@ const Battle = {
                     <img src="${card.img || ''}" alt="${card.name}" class="card-img" onerror="this.style.display='none'">
                 </div>
                 <div class="card-name">${card.name}</div>
+                ${renderTraits(card.traits)}
                 ${card.attack !== undefined ? `<div class="card-stats">
                     <span class="card-attack">⚔${card.attack}</span>
                     <span class="card-health">❤${card.health}</span>
@@ -947,6 +948,7 @@ const Battle = {
         return `<div class="board-card ${unit.owner === 'enemy' ? 'enemy' : ''}">
             <div class="bc-img"><img src="${unit.img || ''}" alt="${unit.name}" style="width:100%;height:100%;object-fit:contain;border-radius:4px" onerror="this.style.display='none';this.parentElement.innerHTML+='${unit.icon || '🃏'}'"></div>
             <div class="bc-name">${unit.name}</div>
+            ${renderTraits(unit.traits)}
             <div class="bc-stats">
                 <span class="card-attack">⚔${unit.currentAttack}</span>
                 <span class="card-health" style="color:${healthColor}">❤${unit.currentHealth}</span>

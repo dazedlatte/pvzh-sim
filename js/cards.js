@@ -594,6 +594,154 @@ const CARD_DATA = {
 
         // ENVIRONMENT CARDS
         { id: 'coffee_grounds_env', name: 'Coffee Grounds', type: 'environment', class: 'mega-grow', cost: 2, rarity: 'uncommon', img: wikiImg('Coffee_Grounds'), tribe: 'Environment', desc: 'Plants here get Double Strike.', traits: [], abilities: [] },
+
+        // === ADDITIONAL MISSING CARDS ===
+
+        // SOLAR - Missing
+        { id: 'heartichoke', name: 'Heartichoke', type: 'plant', class: 'solar', cost: 4, attack: 3, health: 4, rarity: 'rare', img: wikiImg('Heartichoke'), tribe: 'Leafy', desc: 'When a Plant or your Hero is healed, do that much damage to the Zombie Hero.', traits: [], abilities: ['on_heal_damage_hero'] },
+        { id: 'elderberry', name: 'Elderberry', type: 'plant', class: 'solar', cost: 4, attack: 2, health: 3, rarity: 'rare', img: wikiImg('Elderberry'), tribe: 'Flower', desc: 'Strikethrough. Plant Evolution: This gets +3.', traits: ['strikethrough'], abilities: ['plant_evo_plus_3'] },
+        { id: 'eyespore', name: 'Eyespore', type: 'plant', class: 'solar', cost: 2, attack: 2, health: 1, rarity: 'rare', img: wikiImg('Eyespore'), tribe: 'Moss', desc: 'Fusion: Destroy a Zombie here.', traits: [], abilities: ['fusion_destroy_here'] },
+        { id: 'solar_winds', name: 'Solar Winds', type: 'environment', class: 'solar', cost: 3, rarity: 'super_rare', img: wikiImg('Solar_Winds'), tribe: 'Environment', desc: 'End of Turn: If there are no Zombies here, make a Sunflower here.', traits: [], abilities: [] },
+        { id: 'wing_nut', name: 'Wing-Nut', type: 'plant', class: 'solar', cost: 4, attack: 3, health: 7, rarity: 'super_rare', img: wikiImg('Wing-Nut'), tribe: 'Nut', desc: "Zombies can't do Bonus Attacks.", traits: [], abilities: ['no_bonus_attacks'] },
+        { id: 'tactical_cuke', name: 'Tactical Cuke', type: 'trick', class: 'solar', cost: 5, rarity: 'super_rare', img: wikiImg('Tactical_Cuke'), tribe: 'Trick', desc: 'Destroy all Plants and Zombies on the Ground.', traits: [], abilities: [] },
+        { id: 'cross_pollination', name: 'Cross-Pollination', type: 'trick', class: 'solar', cost: 3, rarity: 'super_rare', img: wikiImg('Cross-Pollination'), tribe: 'Flower', desc: 'Conjure a Flower. Conjure a Fruit. They both cost 1 less.', traits: [], abilities: [] },
+        { id: 'astrocado', name: 'Astrocado', type: 'plant', class: 'solar', cost: 5, attack: 5, health: 3, rarity: 'legendary', img: wikiImg('Astrocado'), tribe: 'Fruit', desc: 'Strikethrough. When destroyed: Gain an Astrocado Pit.', traits: ['strikethrough'], abilities: ['on_destroy_gain_pit'] },
+        { id: 'aloesaurus', name: 'Aloesaurus', type: 'plant', class: 'solar', cost: 5, attack: 4, health: 7, rarity: 'legendary', img: wikiImg('Aloesaurus'), tribe: 'Cactus', desc: 'Dino-Roar: Heal all Plants and the Plant Hero for 1.', traits: [], abilities: ['dino_roar_heal_all'] },
+        { id: 'astrocado_pit', name: 'Astrocado Pit', type: 'plant', class: 'solar', cost: 1, attack: 0, health: 1, rarity: 'legendary', img: wikiImg('Astrocado_Pit'), tribe: 'Fruit', desc: 'Start of turn: This transforms into an Astrocado.', traits: [], abilities: ['start_of_turn_transform'] },
+        { id: 'venus_flytraplanet', name: 'Venus Flytraplanet', type: 'environment', class: 'solar', cost: 4, rarity: 'uncommon', img: wikiImg('Venus_Flytraplanet'), tribe: 'Environment', desc: 'When a Plant here does damage and survives, heal your Hero for that much.', traits: [], abilities: [] },
+        { id: 'kernel_pult', name: 'Kernel-Pult', type: 'plant', class: 'solar', cost: 1, attack: 1, health: 1, rarity: 'uncommon', img: wikiImg('Kernel-Pult'), tribe: 'Corn', desc: 'Team-Up. When played on Heights: A Zombie gets -1/-1.', traits: ['team-up'], abilities: ['on_play_heights_debuff'] },
+        { id: 'lil_buddy', name: "Lil' Buddy", type: 'plant', class: 'solar', cost: 0, attack: 0, health: 1, rarity: 'uncommon', img: wikiImg('Lil%27_Buddy'), tribe: 'Flower', desc: 'Team-Up. When played: Heal your Hero for 2.', traits: ['team-up'], abilities: ['on_play_heal_2'] },
+        { id: 'sunnier_shroom', name: 'Sunnier-Shroom', type: 'plant', class: 'solar', cost: 3, attack: 0, health: 3, rarity: 'uncommon', img: wikiImg('Sunnier-Shroom'), tribe: 'Mushroom', desc: 'Team-Up. Start of Turn: You get +2 Sun this turn.', traits: ['team-up'], abilities: ['start_of_turn_sun_2'] },
+
+        // BEASTLY - Missing
+        { id: 'goat', name: 'Goat', type: 'zombie', class: 'beastly', cost: 0, attack: 1, health: 1, rarity: 'common', img: wikiImg('Goat'), tribe: 'Pet', desc: 'This gets +1/+1 when any kind of Goat is hurt.', traits: [], abilities: ['on_goat_hurt_plus_1'] },
+        { id: 'vengeful_cyborg', name: 'Vengeful Cyborg', type: 'zombie', class: 'beastly', cost: 5, attack: 5, health: 5, rarity: 'rare', img: wikiImg('Vengeful_Cyborg'), tribe: 'Science', desc: 'Hunt.', traits: ['hunt'], abilities: [] },
+
+        // BRAINY - Missing
+        { id: 'hail_a_copter', name: 'Hail-a-Copter', type: 'trick', class: 'brainy', cost: 6, rarity: 'rare', img: wikiImg('Hail-a-Copter'), tribe: 'Science', desc: 'Make a 6/5 Copter Commando Imp.', traits: [], abilities: [] },
+        { id: 'wizard_gargantuar', name: 'Wizard Gargantuar', type: 'zombie', class: 'brainy', cost: 6, attack: 6, health: 7, rarity: 'rare', img: wikiImg('Wizard_Gargantuar'), tribe: 'Gargantuar', desc: 'All Gargantuars have Bullseye.', traits: [], abilities: [] },
+        { id: 'cosmic_scientist', name: 'Cosmic Scientist', type: 'zombie', class: 'brainy', cost: 2, attack: 1, health: 2, rarity: 'rare', img: wikiImg('Cosmic_Scientist'), tribe: 'Science', desc: 'Bullseye. When played: Conjure a Science card, and it gets Bullseye.', traits: ['bullseye'], abilities: ['on_play_conjure_science'] },
+        { id: 'zom_blob', name: 'Zom-Blob', type: 'zombie', class: 'brainy', cost: 3, attack: 1, health: 5, rarity: 'rare', img: wikiImg('Zom-Blob'), tribe: 'Monster', desc: 'Zombie Evolution: This gets +1 for each Brain you got this turn.', traits: [], abilities: ['zombie_evo_plus_per_brain'] },
+        { id: 'mustache_monument', name: 'Mustache Monument', type: 'zombie', class: 'brainy', cost: 3, attack: 1, health: 5, rarity: 'rare', img: wikiImg('Mustache_Monument'), tribe: 'Mustache', desc: 'Fusion: A Zombie played on this does a Bonus Attack.', traits: [], abilities: ['fusion_bonus_attack'] },
+        { id: 'electrician', name: 'Electrician', type: 'zombie', class: 'brainy', cost: 3, attack: 2, health: 2, rarity: 'super_rare', img: wikiImg('Electrician'), tribe: 'Science', desc: 'Gravestone. When revealed: A Zombie does a Bonus Attack.', traits: ['gravestone'], abilities: ['graves_bonus_attack'] },
+        { id: 'mad_chemist', name: 'Mad Chemist', type: 'zombie', class: 'brainy', cost: 4, attack: 3, health: 5, rarity: 'super_rare', img: wikiImg('Mad_Chemist'), tribe: 'Science', desc: 'Gravestone. When you play your first Trick each turn, Conjure a Trick.', traits: ['gravestone'], abilities: ['graves_conjure_trick'] },
+        { id: 'portal_technician', name: 'Portal Technician', type: 'zombie', class: 'brainy', cost: 5, attack: 4, health: 4, rarity: 'super_rare', img: wikiImg('Portal_Technician'), tribe: 'Mustache', desc: 'When destroyed: Make a random Zombie here.', traits: [], abilities: ['on_destroy_make_random'] },
+        { id: 'neutron_imp', name: 'Neutron Imp', type: 'zombie', class: 'brainy', cost: 1, attack: 2, health: 2, rarity: 'super_rare', img: wikiImg('Neutron_Imp'), tribe: 'Imp', desc: 'When you play an Environment, this does a Bonus Attack.', traits: [], abilities: ['on_environment_bonus_attack'] },
+        { id: 'transformation_station', name: 'Transformation Station', type: 'environment', class: 'brainy', cost: 2, rarity: 'super_rare', img: wikiImg('Transformation_Station'), tribe: 'Environment', desc: 'Start of turn: Transform the Zombie here into a random Zombie that costs 1 more.', traits: [], abilities: [] },
+        { id: 'wormhole_gatekeeper', name: 'Wormhole Gatekeeper', type: 'zombie', class: 'brainy', cost: 3, attack: 2, health: 5, rarity: 'super_rare', img: wikiImg('Wormhole_Gatekeeper'), tribe: 'Science', desc: 'Bullseye. Each player draws an extra card each turn.', traits: ['bullseye'], abilities: [] },
+        { id: 'evolutionary_leap', name: 'Evolutionary Leap', type: 'trick', class: 'brainy', cost: 2, rarity: 'super_rare', img: wikiImg('Evolutionary_Leap'), tribe: 'Trick', desc: 'Transform a Zombie into a random Zombie that costs 1 more. Draw a card.', traits: [], abilities: [] },
+        { id: 'parasol_zombie', name: 'Parasol Zombie', type: 'zombie', class: 'brainy', cost: 4, attack: 3, health: 6, rarity: 'super_rare', img: wikiImg('Parasol_Zombie'), tribe: 'Party', desc: 'Untrickable. Zombies next door are Untrickable.', traits: ['untrickable'], abilities: [] },
+        { id: 'duckstache', name: 'Duckstache', type: 'zombie', class: 'brainy', cost: 3, attack: 3, health: 2, rarity: 'super_rare', img: wikiImg('Duckstache'), tribe: 'Pet', desc: 'When this does damage, Conjure a Mustache. Mustache Evolution: This gets +2/+2.', traits: [], abilities: ['on_damage_conjure_mustache'] },
+        { id: 'teleport', name: 'Teleport', type: 'trick', class: 'brainy', cost: 1, rarity: 'legendary', img: wikiImg('Teleport'), tribe: 'Science', desc: "You may play a Zombie when it's time for Tricks this turn. Draw a card.", traits: [], abilities: [] },
+        { id: 'gargantuar_mime', name: 'Gargantuar Mime', type: 'zombie', class: 'brainy', cost: 5, attack: 5, health: 7, rarity: 'legendary', img: wikiImg('Gargantuar_Mime'), tribe: 'Gargantuar', desc: 'When a non-Mime Plant or Zombie does a Bonus Attack, this does a Bonus Attack.', traits: [], abilities: ['on_bonus_attack_copy'] },
+        { id: 'zombot_dinotronic_mechasaur', name: 'Zombot Dinotronic Mechasaur', type: 'zombie', class: 'brainy', cost: 7, attack: 6, health: 7, rarity: 'legendary', img: wikiImg('Zombot_Dinotronic_Mechasaur'), tribe: 'Science', desc: 'Bullseye. Dino-Roar: Make a random History Zombie in a random lane.', traits: ['bullseye'], abilities: ['dino_roar_make_zombie'] },
+        { id: 'leprechaun_imp', name: 'Leprechaun Imp', type: 'zombie', class: 'brainy', cost: 1, attack: 2, health: 2, rarity: 'event', img: wikiImg('Leprechaun_Imp'), tribe: 'Imp', desc: 'When played: Shuffle a Pot of Gold into your deck.', traits: [], abilities: ['on_play_shuffle_pot'] },
+        { id: 'regifting_zombie', name: 'Regifting Zombie', type: 'zombie', class: 'brainy', cost: 3, attack: 3, health: 2, rarity: 'event', img: wikiImg('Regifting_Zombie'), tribe: 'Party', desc: 'When played: Each player draws two cards.', traits: [], abilities: ['on_play_both_draw_2'] },
+        { id: 'trick_or_treater', name: 'Trick-or-Treater', type: 'zombie', class: 'brainy', cost: 3, attack: 2, health: 3, rarity: 'event', img: wikiImg('Trick-or-Treater'), tribe: 'Gourmet', desc: 'Gravestone. When you play your first Trick each turn, Conjure a Treat.', traits: ['gravestone'], abilities: ['graves_conjure_treat'] },
+        { id: 'kitchen_sink_zombie', name: 'Kitchen Sink Zombie', type: 'zombie', class: 'brainy', cost: 6, attack: 3, health: 6, rarity: 'event', img: wikiImg('Kitchen_Sink_Zombie'), tribe: 'Professional', desc: 'Bullseye. Frenzy. Armored 1. Overshoot 2. Anti-Hero 3.', traits: ['bullseye', 'frenzy', 'armored_1', 'overshoot_2', 'anti_hero_3'], abilities: [] },
+        { id: 'bad_moon_rising', name: 'Bad Moon Rising', type: 'trick', class: 'brainy', cost: 7, rarity: 'event', img: wikiImg('Bad_Moon_Rising'), tribe: 'Trick', desc: 'Transform every Zombie into random Zombies that cost 5 or more.', traits: [], abilities: [] },
+        { id: 'pot_of_gold', name: 'Pot of Gold', type: 'trick', class: 'brainy', cost: 1, rarity: 'common', img: wikiImg('Pot_of_Gold'), tribe: 'Trick', desc: 'Draw three cards.', traits: [], abilities: ['draw_3'] },
+        { id: 'space_cadet', name: 'Space Cadet', type: 'zombie', class: 'brainy', cost: 2, attack: 2, health: 3, rarity: 'common', img: wikiImg('Space_Cadet'), tribe: 'Science', desc: '', traits: [], abilities: [] },
+
+        // CRAZY - Missing
+        { id: 'cuckoo_zombie', name: 'Cuckoo Zombie', type: 'zombie', class: 'crazy', cost: 2, attack: 4, health: 1, rarity: 'common', img: wikiImg('Cuckoo_Zombie'), tribe: 'Pet', desc: '', traits: [], abilities: [] },
+        { id: 'unlife_of_the_party', name: 'Unlife of the Party', type: 'zombie', class: 'crazy', cost: 1, attack: 1, health: 1, rarity: 'uncommon', img: wikiImg('Unlife_of_the_Party'), tribe: 'Party', desc: 'This gets +1/+1 when you play another Zombie.', traits: [], abilities: ['on_zombie_played_plus_1'] },
+        { id: 'newspaper_zombie', name: 'Newspaper Zombie', type: 'zombie', class: 'crazy', cost: 2, attack: 1, health: 4, rarity: 'uncommon', img: wikiImg('Newspaper_Zombie'), tribe: 'Professional', desc: 'Gravestone. When hurt: This gets +4.', traits: ['gravestone'], abilities: ['graves_hurt_plus_4'] },
+        { id: 'cakesplosion', name: 'Cakesplosion', type: 'trick', class: 'crazy', cost: 4, rarity: 'uncommon', img: wikiImg('Cakesplosion'), tribe: 'Trick', desc: 'Do 4 damage to a Plant.', traits: [], abilities: [] },
+        { id: 'orchestra_conductor', name: 'Orchestra Conductor', type: 'zombie', class: 'crazy', cost: 4, attack: 0, health: 2, rarity: 'uncommon', img: wikiImg('Orchestra_Conductor'), tribe: 'Dancing', desc: 'When played: All Zombies get +2.', traits: [], abilities: ['on_play_all_zombies_plus_2'] },
+        { id: 'loose_cannon', name: 'Loose Cannon', type: 'zombie', class: 'crazy', cost: 1, attack: 1, health: 1, rarity: 'uncommon', img: wikiImg('Loose_Cannon'), tribe: 'Imp', desc: 'Overshoot 2.', traits: ['overshoot_2'], abilities: [] },
+        { id: 'meteor_z', name: 'Meteor Z', type: 'environment', class: 'crazy', cost: 2, rarity: 'uncommon', img: wikiImg('Meteor_Z'), tribe: 'Environment', desc: 'Zombies here have +2.', traits: [], abilities: [] },
+        { id: 'mystery_egg', name: 'Mystery Egg', type: 'zombie', class: 'crazy', cost: 1, attack: 0, health: 2, rarity: 'uncommon', img: wikiImg('Mystery_Egg'), tribe: 'Gourmet', desc: 'Start of Tricks: Transform this into a random zombie that costs 2 or less.', traits: [], abilities: ['start_of_tricks_transform'] },
+        { id: 'sugary_treat', name: 'Sugary Treat', type: 'trick', class: 'crazy', cost: 2, rarity: 'uncommon', img: wikiImg('Sugary_Treat'), tribe: 'Gourmet', desc: 'A Zombie gets +3/+1.', traits: [], abilities: [] },
+        { id: 'trapper_territory', name: 'Trapper Territory', type: 'environment', class: 'crazy', cost: 1, rarity: 'uncommon', img: wikiImg('Trapper_Territory'), tribe: 'Environment', desc: 'Before combat here: Do 1 damage to each Plant here.', traits: [], abilities: [] },
+        { id: 'zombots_wrath', name: "Zombot's Wrath", type: 'trick', class: 'crazy', cost: 3, rarity: 'rare', img: wikiImg('Zombot%27s_Wrath'), tribe: 'Science', desc: 'Do 3 damage. If there is a zombie in every lane, this does double damage.', traits: [], abilities: [] },
+        { id: 'the_chickening', name: 'The Chickening', type: 'trick', class: 'crazy', cost: 4, rarity: 'rare', img: wikiImg('The_Chickening'), tribe: 'Pet', desc: 'Do 2 damage to each Plant.', traits: [], abilities: [] },
+        { id: 'imp_throwing_gargantuar', name: 'Imp-Throwing Gargantuar', type: 'zombie', class: 'crazy', cost: 5, attack: 5, health: 5, rarity: 'rare', img: wikiImg('Imp-Throwing_Gargantuar'), tribe: 'Gargantuar', desc: 'When hurt: Make a 1/1 Swabbie with Amphibious in a random lane.', traits: [], abilities: ['on_hurt_make_swabbie'] },
+        { id: 'final_mission', name: 'Final Mission', type: 'trick', class: 'crazy', cost: 2, rarity: 'rare', img: wikiImg('Final_Mission'), tribe: 'Science', desc: 'Destroy a Zombie. Then do 4 damage.', traits: [], abilities: [] },
+        { id: 'cosmic_dancer', name: 'Cosmic Dancer', type: 'zombie', class: 'crazy', cost: 4, attack: 2, health: 3, rarity: 'rare', img: wikiImg('Cosmic_Dancer'), tribe: 'Dancing', desc: 'Overshoot 2. When played: Conjure a Dancing card, and it gets Overshoot 2.', traits: ['overshoot_2'], abilities: ['on_play_conjure_dancing'] },
+        { id: 'gizzard_lizard', name: 'Gizzard Lizard', type: 'zombie', class: 'crazy', cost: 3, attack: 3, health: 3, rarity: 'rare', img: wikiImg('Gizzard_Lizard'), tribe: 'Pet', desc: 'Zombie Evolution: Do 2 damage to each Plant.', traits: [], abilities: ['zombie_evo_damage_all'] },
+        { id: 'disco_dance_floor', name: 'Disco Dance Floor', type: 'zombie', class: 'crazy', cost: 2, attack: 0, health: 3, rarity: 'rare', img: wikiImg('Disco_Dance_Floor'), tribe: 'Dancing', desc: 'Overshoot 3. Fusion: A Zombie played on this gets Overshoot 3.', traits: ['overshoot_3'], abilities: ['fusion_overshoot'] },
+        { id: 'aerobics_instructor', name: 'Aerobics Instructor', type: 'zombie', class: 'crazy', cost: 2, attack: 2, health: 3, rarity: 'super_rare', img: wikiImg('Aerobics_Instructor'), tribe: 'Dancing', desc: 'Start of Turn: All Dancing Zombies get +2.', traits: [], abilities: ['start_of_turn_dancing_plus_2'] },
+        { id: 'abracadaver', name: 'Abracadaver', type: 'zombie', class: 'crazy', cost: 3, attack: 3, health: 2, rarity: 'super_rare', img: wikiImg('Abracadaver'), tribe: 'Mustache', desc: 'Gravestone. When this hurts the Plant Hero, do 3 damage to a random Plant.', traits: ['gravestone'], abilities: ['graves_hurt_damage_random'] },
+        { id: 'moon_base_z', name: 'Moon Base Z', type: 'environment', class: 'crazy', cost: 3, rarity: 'super_rare', img: wikiImg('Moon_Base_Z'), tribe: 'Environment', desc: 'Zombies here have Overshoot 3.', traits: [], abilities: [] },
+        { id: 'gas_giant', name: 'Gas Giant', type: 'zombie', class: 'crazy', cost: 6, attack: 5, health: 5, rarity: 'super_rare', img: wikiImg('Gas_Giant'), tribe: 'Gargantuar', desc: 'When hurt: Do 1 damage to each other Plant and Zombie. When destroyed: Do 5 damage to the Plant Hero.', traits: [], abilities: ['on_hurt_damage_all_1', 'on_destroy_damage_hero_5'] },
+        { id: 'quickdraw_con_man', name: 'Quickdraw Con Man', type: 'zombie', class: 'crazy', cost: 1, attack: 1, health: 3, rarity: 'super_rare', img: wikiImg('Quickdraw_Con_Man'), tribe: 'Pirate', desc: 'Bullseye. When the Plant Hero draws a card, do 1 damage to them.', traits: ['bullseye'], abilities: ['on_plant_draw_damage'] },
+        { id: 'grave_robber', name: 'Grave Robber', type: 'zombie', class: 'crazy', cost: 1, attack: 2, health: 2, rarity: 'super_rare', img: wikiImg('Grave_Robber'), tribe: 'Mustache', desc: 'Bullseye. This gets +1 when a Zombie is revealed from a Gravestone.', traits: ['bullseye'], abilities: ['on_grave_reveal_plus_1'] },
+        { id: 'zombies_best_friend', name: "Zombie's Best Friend", type: 'zombie', class: 'crazy', cost: 2, attack: 2, health: 1, rarity: 'super_rare', img: wikiImg('Zombie%27s_Best_Friend'), tribe: 'Pet', desc: 'When played next to a Zombie: Make a random Zombie that costs 1.', traits: [], abilities: ['on_play_make_random_1'] },
+        { id: 'barrel_of_deadbeards', name: 'Barrel of Deadbeards', type: 'zombie', class: 'crazy', cost: 2, attack: 0, health: 1, rarity: 'legendary', img: wikiImg('Barrel_of_Deadbeards'), tribe: 'Pirate', desc: 'When destroyed: Do 1 damage to all Plants and Zombies, then make a 4/3 Captain Deadbeard here.', traits: [], abilities: ['on_destroy_make_captain'] },
+        { id: 'gargantuars_feast', name: "Gargantuars' Feast", type: 'trick', class: 'crazy', cost: 11, rarity: 'legendary', img: wikiImg('Gargantuars%27_Feast'), tribe: 'Gargantuar', desc: 'Make 3 random Gargantuars in random Lanes.', traits: [], abilities: [] },
+        { id: 'quasar_wizard', name: 'Quasar Wizard', type: 'zombie', class: 'crazy', cost: 2, attack: 2, health: 2, rarity: 'legendary', img: wikiImg('Quasar_Wizard'), tribe: 'Mustache', desc: 'When played: If there is a Zombie next door, Conjure a Superpower.', traits: [], abilities: ['on_play_conjure_superpower'] },
+        { id: 'tankylosaurus', name: 'Tankylosaurus', type: 'zombie', class: 'crazy', cost: 4, attack: 2, health: 6, rarity: 'legendary', img: wikiImg('Tankylosaurus'), tribe: 'Pet', desc: 'Dino-Roar: Do 2 damage to a random Plant or Plant Hero.', traits: [], abilities: ['dino_roar_damage_2'] },
+        { id: 'headhunter', name: 'Headhunter', type: 'zombie', class: 'crazy', cost: 4, attack: 3, health: 4, rarity: 'legendary', img: wikiImg('Headhunter'), tribe: 'Dancing', desc: 'When you play a Dancing card, do 2 damage to the Plant Hero. Dancing Evolution: This gets +2/+2 and Bullseye.', traits: [], abilities: ['on_dancing_damage_2'] },
+        { id: 'exploding_fruitcake', name: 'Exploding Fruitcake', type: 'trick', class: 'crazy', cost: 2, rarity: 'event', img: wikiImg('Exploding_Fruitcake'), tribe: 'Gourmet', desc: 'Do 7 damage to a Plant. The Plant player Conjures a Fruit.', traits: [], abilities: [] },
+        { id: 'unexpected_gifts', name: 'Unexpected Gifts', type: 'trick', class: 'crazy', cost: 3, rarity: 'event', img: wikiImg('Unexpected_Gifts'), tribe: 'Party', desc: 'Conjure three Event cards. Then the Plant player Conjures an Event card.', traits: [], abilities: [] },
+        { id: 'hippity_hop_gargantuar', name: 'Hippity Hop Gargantuar', type: 'zombie', class: 'crazy', cost: 5, attack: 6, health: 5, rarity: 'event', img: wikiImg('Hippity_Hop_Gargantuar'), tribe: 'Gargantuar', desc: 'When hurt: Make a Mystery Egg in a random lane.', traits: [], abilities: ['on_hurt_make_egg'] },
+        { id: 'captain_deadbeard', name: 'Captain Deadbeard', type: 'zombie', class: 'crazy', cost: 3, attack: 4, health: 3, rarity: 'common', img: wikiImg('Captain_Deadbeard'), tribe: 'Pirate', desc: '', traits: [], abilities: [] },
+
+        // HEARTY - Missing
+        { id: 'baseball_zombie', name: 'Baseball Zombie', type: 'zombie', class: 'hearty', cost: 1, attack: 1, health: 1, rarity: 'common', img: wikiImg('Baseball_Zombie'), tribe: 'Sports', desc: '', traits: [], abilities: [] },
+        { id: 'conehead', name: 'Conehead', type: 'zombie', class: 'hearty', cost: 2, attack: 2, health: 2, rarity: 'common', img: wikiImg('Conehead'), tribe: 'Professional', desc: 'Armored 1.', traits: ['armored_1'], abilities: [] },
+        { id: 'medic', name: 'Medic', type: 'zombie', class: 'hearty', cost: 4, attack: 3, health: 3, rarity: 'uncommon', img: wikiImg('Medic'), tribe: 'Professional', desc: 'When played: Heal 4.', traits: [], abilities: ['on_play_heal_4'] },
+        { id: 'camel_crossing', name: 'Camel Crossing', type: 'trick', class: 'hearty', cost: 1, rarity: 'uncommon', img: wikiImg('Camel_Crossing'), tribe: 'Pet', desc: 'All Zombies get +2 Health.', traits: [], abilities: [] },
+        { id: 'terrify', name: 'Terrify', type: 'trick', class: 'hearty', cost: 2, rarity: 'uncommon', img: wikiImg('Terrify'), tribe: 'Trick', desc: 'Move a Plant. Draw a card.', traits: [], abilities: [] },
+        { id: 'trash_can_zombie', name: 'Trash Can Zombie', type: 'zombie', class: 'hearty', cost: 3, attack: 2, health: 3, rarity: 'uncommon', img: wikiImg('Trash_Can_Zombie'), tribe: 'Professional', desc: 'Gravestone. When revealed: This can\'t be hurt this turn.', traits: ['gravestone'], abilities: ['graves_protect'] },
+        { id: 'buckethead', name: 'Buckethead', type: 'zombie', class: 'hearty', cost: 4, attack: 3, health: 4, rarity: 'uncommon', img: wikiImg('Buckethead'), tribe: 'Professional', desc: 'Armored 1.', traits: ['armored_1'], abilities: [] },
+        { id: 'ra_zombie', name: 'Ra Zombie', type: 'zombie', class: 'hearty', cost: 6, attack: 3, health: 4, rarity: 'uncommon', img: wikiImg('Ra_Zombie'), tribe: 'History', desc: 'When played: The Plant Hero loses 2 Sun this turn.', traits: [], abilities: ['on_play_drain_sun'] },
+        { id: 'cone_zone', name: 'Cone Zone', type: 'environment', class: 'hearty', cost: 2, rarity: 'uncommon', img: wikiImg('Cone_Zone'), tribe: 'Environment', desc: 'Zombies here get +3 Health.', traits: [], abilities: [] },
+        { id: 'celestial_custodian', name: 'Celestial Custodian', type: 'zombie', class: 'hearty', cost: 3, attack: 3, health: 2, rarity: 'uncommon', img: wikiImg('Celestial_Custodian'), tribe: 'Professional', desc: 'When played in an Environment: Destroy a Plant with 2 or less.', traits: [], abilities: ['on_play_env_destroy'] },
+        { id: 'screen_door_zombie', name: 'Screen Door Zombie', type: 'zombie', class: 'hearty', cost: 5, attack: 4, health: 4, rarity: 'uncommon', img: wikiImg('Screen_Door_Zombie'), tribe: 'Professional', desc: 'Gravestone. When revealed: This can\'t be hurt this turn.', traits: ['gravestone'], abilities: ['graves_protect'] },
+        { id: 'healthy_treat', name: 'Healthy Treat', type: 'trick', class: 'hearty', cost: 1, rarity: 'uncommon', img: wikiImg('Healthy_Treat'), tribe: 'Gourmet', desc: 'A Zombie gets +1/+3.', traits: [], abilities: [] },
+        { id: 'zombie_middle_manager', name: 'Zombie Middle Manager', type: 'zombie', class: 'hearty', cost: 1, attack: 1, health: 2, rarity: 'uncommon', img: wikiImg('Zombie_Middle_Manager'), tribe: 'Professional', desc: 'This gets +1 when another Professional gets hurt. When played: Conjure a Professional.', traits: [], abilities: ['on_professional_hurt_plus_1'] },
+        { id: 'leftovers', name: 'Leftovers', type: 'trick', class: 'hearty', cost: 2, rarity: 'uncommon', img: wikiImg('Leftovers'), tribe: 'Pet', desc: 'All Zombies get +1/+1.', traits: [], abilities: [] },
+        { id: 'monster_mash', name: 'Monster Mash', type: 'trick', class: 'hearty', cost: 5, rarity: 'rare', img: wikiImg('Monster_Mash'), tribe: 'Monster', desc: 'All Zombies get +2/+2.', traits: [], abilities: [] },
+        { id: 'knight_of_the_living_dead', name: 'Knight of the Living Dead', type: 'zombie', class: 'hearty', cost: 7, attack: 5, health: 5, rarity: 'rare', img: wikiImg('Knight_of_the_Living_Dead'), tribe: 'History', desc: 'Armored 2.', traits: ['armored_2'], abilities: [] },
+        { id: 'rodeo_gargantuar', name: 'Rodeo Gargantuar', type: 'zombie', class: 'hearty', cost: 7, attack: 5, health: 9, rarity: 'rare', img: wikiImg('Rodeo_Gargantuar'), tribe: 'Gargantuar', desc: 'Gravestone. When revealed: Move a Plant.', traits: ['gravestone'], abilities: ['graves_move_plant'] },
+        { id: 'escape_through_time', name: 'Escape through Time', type: 'trick', class: 'hearty', cost: 2, rarity: 'rare', img: wikiImg('Escape_through_Time'), tribe: 'History', desc: "A Zombie can't be hurt this turn. Conjure a History card.", traits: [], abilities: [] },
+        { id: 'primeval_yeti', name: 'Primeval Yeti', type: 'zombie', class: 'hearty', cost: 5, attack: 4, health: 4, rarity: 'rare', img: wikiImg('Primeval_Yeti'), tribe: 'Pet', desc: 'Zombie Evolution: All Zombies get +2/+2.', traits: [], abilities: ['zombie_evo_all_plus_2'] },
+        { id: 'lost_colosseum', name: 'Lost Colosseum', type: 'zombie', class: 'hearty', cost: 3, attack: 2, health: 3, rarity: 'rare', img: wikiImg('Lost_Colosseum'), tribe: 'History', desc: 'Frenzy. Fusion: A Zombie played on this gets +2/+3 and Frenzy.', traits: ['frenzy'], abilities: ['fusion_frenzy'] },
+        { id: 'landscaper', name: 'Landscaper', type: 'zombie', class: 'hearty', cost: 3, attack: 2, health: 2, rarity: 'super_rare', img: wikiImg('Landscaper'), tribe: 'Professional', desc: 'Gravestone. When revealed: A Plant gets -2.', traits: ['gravestone'], abilities: ['graves_debuff_plant'] },
+        { id: 'coffee_zombie', name: 'Coffee Zombie', type: 'zombie', class: 'hearty', cost: 6, attack: 4, health: 3, rarity: 'super_rare', img: wikiImg('Coffee_Zombie'), tribe: 'Gourmet', desc: 'When played: All Zombies get +1/+1 and Frenzy.', traits: [], abilities: ['on_play_all_frenzy'] },
+        { id: 'genetic_experiment', name: 'Genetic Experiment', type: 'zombie', class: 'hearty', cost: 1, attack: 2, health: 1, rarity: 'super_rare', img: wikiImg('Genetic_Experiment'), tribe: 'Science', desc: "Start of Tricks: This gets +1/+1 if there's a Zombie next door.", traits: [], abilities: ['start_of_tricks_plus_1'] },
+        { id: 'turquoise_skull_zombie', name: 'Turquoise Skull Zombie', type: 'zombie', class: 'hearty', cost: 4, attack: 2, health: 6, rarity: 'super_rare', img: wikiImg('Turquoise_Skull_Zombie'), tribe: 'Professional', desc: 'Gravestone. Start of turn: The Plant Player loses 1 Sun. This gets +1.', traits: ['gravestone'], abilities: ['graves_drain_sun'] },
+        { id: 'zombie_king', name: 'Zombie King', type: 'zombie', class: 'hearty', cost: 4, attack: 3, health: 5, rarity: 'legendary', img: wikiImg('Zombie_King'), tribe: 'Mustache', desc: 'End of Turn: Transform another random Zombie into a 5/5 Knight of the Living Dead with Armored 2.', traits: [], abilities: ['end_of_turn_transform'] },
+        { id: 'undying_pharaoh', name: 'Undying Pharaoh', type: 'zombie', class: 'hearty', cost: 6, attack: 4, health: 6, rarity: 'legendary', img: wikiImg('Undying_Pharaoh'), tribe: 'History', desc: "Your Hero's Health can't go below 1.", traits: [], abilities: ['hero_hp_min_1'] },
+        { id: 'zombot_battlecruiser_5000', name: 'Zombot Battlecruiser 5000', type: 'zombie', class: 'hearty', cost: 6, attack: 6, health: 5, rarity: 'legendary', img: wikiImg('Zombot_Battlecruiser_5000'), tribe: 'Science', desc: 'Gravestone. When revealed: Zombies can\'t be hurt this turn.', traits: ['gravestone'], abilities: ['graves_protect_all'] },
+        { id: 'stompadon', name: 'Stompadon', type: 'zombie', class: 'hearty', cost: 4, attack: 2, health: 4, rarity: 'legendary', img: wikiImg('Stompadon'), tribe: 'Pet', desc: 'Dino-Roar: All Zombies in your hand get +1/+1.', traits: [], abilities: ['dino_roar_buff_hand'] },
+        { id: 'chum_champion', name: 'Chum Champion', type: 'zombie', class: 'hearty', cost: 5, attack: 4, health: 4, rarity: 'legendary', img: wikiImg('Chum_Champion'), tribe: 'History', desc: 'When played: All Plants get -1. Sports Evolution: Destroy each Plant with 2 or less.', traits: [], abilities: ['on_play_debuff_all_1'] },
+        { id: 'octo_pet', name: 'Octo-Pet', type: 'zombie', class: 'hearty', cost: 3, attack: 3, health: 2, rarity: 'common', img: wikiImg('Octo-Pet'), tribe: 'Pet', desc: 'Amphibious.', traits: ['amphibious'], abilities: [] },
+
+        // SNEAKY - Missing
+        { id: 'imp', name: 'Imp', type: 'zombie', class: 'sneaky', cost: 1, attack: 1, health: 1, rarity: 'common', img: wikiImg('Imp'), tribe: 'Imp', desc: '', traits: [], abilities: [] },
+        { id: 'smoke_bomb', name: 'Smoke Bomb', type: 'trick', class: 'sneaky', cost: 1, rarity: 'common', img: wikiImg('Smoke_Bomb'), tribe: 'Trick', desc: 'Move a Zombie. It gets +1.', traits: [], abilities: [] },
+        { id: 'fishy_imp', name: 'Fishy Imp', type: 'zombie', class: 'sneaky', cost: 2, attack: 3, health: 1, rarity: 'common', img: wikiImg('Fishy_Imp'), tribe: 'Imp', desc: 'Amphibious.', traits: ['amphibious'], abilities: [] },
+        { id: 'zombie_chicken', name: 'Zombie Chicken', type: 'zombie', class: 'sneaky', cost: 1, attack: 2, health: 2, rarity: 'uncommon', img: wikiImg('Zombie_Chicken'), tribe: 'Pet', desc: 'This moves to a random lane when a Plant is played here.', traits: [], abilities: ['on_plant_played_move'] },
+        { id: 'hot_dog_imp', name: 'Hot Dog Imp', type: 'zombie', class: 'sneaky', cost: 2, attack: 2, health: 2, rarity: 'uncommon', img: wikiImg('Hot_Dog_Imp'), tribe: 'Imp', desc: 'Strikethrough.', traits: ['strikethrough'], abilities: [] },
+        { id: 'stealthy_imp', name: 'Stealthy Imp', type: 'zombie', class: 'sneaky', cost: 3, attack: 2, health: 2, rarity: 'uncommon', img: wikiImg('Stealthy_Imp'), tribe: 'Pirate', desc: 'Gravestone. Anti-Hero 4.', traits: ['gravestone', 'anti_hero_4'], abilities: [] },
+        { id: 'firefighter', name: 'Firefighter', type: 'zombie', class: 'sneaky', cost: 4, attack: 4, health: 5, rarity: 'uncommon', img: wikiImg('Firefighter'), tribe: 'Professional', desc: 'Gravestone. When revealed: Bounce another Zombie.', traits: ['gravestone'], abilities: ['graves_bounce_ally'] },
+        { id: 'graveyard', name: 'Graveyard', type: 'environment', class: 'sneaky', cost: 1, rarity: 'uncommon', img: wikiImg('Graveyard'), tribe: 'Environment', desc: 'Zombies played here are Gravestones. When a Zombie is revealed from a Gravestone here, it gets +1.', traits: [], abilities: [] },
+        { id: 'ice_pirate', name: 'Ice Pirate', type: 'zombie', class: 'sneaky', cost: 2, attack: 3, health: 1, rarity: 'uncommon', img: wikiImg('Ice_Pirate'), tribe: 'Pirate', desc: 'Gravestone. When revealed in an Environment: Freeze a Plant.', traits: ['gravestone'], abilities: ['graves_freeze'] },
+        { id: 'frosty_mustache', name: 'Frosty Mustache', type: 'trick', class: 'sneaky', cost: 2, rarity: 'uncommon', img: wikiImg('Frosty_Mustache'), tribe: 'Mustache', desc: 'Freeze a Plant. Conjure a Mustache.', traits: [], abilities: [] },
+        { id: 'swabbie', name: 'Swabbie', type: 'zombie', class: 'sneaky', cost: 0, attack: 1, health: 1, rarity: 'uncommon', img: wikiImg('Swabbie'), tribe: 'Pirate', desc: 'Amphibious.', traits: ['amphibious'], abilities: [] },
+        { id: 'barrel_of_barrels', name: 'Barrel of Barrels', type: 'trick', class: 'sneaky', cost: 2, rarity: 'uncommon', img: wikiImg('Barrel_of_Barrels'), tribe: 'Barrel', desc: 'A Zombie becomes Deadly. Conjure a Barrel.', traits: [], abilities: [] },
+        { id: 'monkey_smuggler', name: 'Monkey Smuggler', type: 'zombie', class: 'sneaky', cost: 2, attack: 2, health: 3, rarity: 'uncommon', img: wikiImg('Monkey_Smuggler'), tribe: 'Pirate', desc: 'Gravestone. When revealed: Steal 2 sections from the Plant Hero\'s Super-Block Meter.', traits: ['gravestone'], abilities: ['graves_steal_block'] },
+        { id: 'imp_commander', name: 'Imp Commander', type: 'zombie', class: 'sneaky', cost: 3, attack: 2, health: 4, rarity: 'rare', img: wikiImg('Imp_Commander'), tribe: 'Pirate', desc: 'When an Imp hurts the Plant Hero, draw a card.', traits: [], abilities: ['on_imp_damage_draw'] },
+        { id: 'barrel_roller_zombie', name: 'Barrel Roller Zombie', type: 'zombie', class: 'sneaky', cost: 4, attack: 3, health: 3, rarity: 'rare', img: wikiImg('Barrel_Roller_Zombie'), tribe: 'Barrel', desc: 'Deadly. When destroyed: Make 1/1 Swabbies with Amphibious next door.', traits: ['deadly'], abilities: ['on_destroy_make_swabbies'] },
+        { id: 'surprise_gargantuar', name: 'Surprise Gargantuar', type: 'zombie', class: 'sneaky', cost: 5, attack: 5, health: 6, rarity: 'rare', img: wikiImg('Surprise_Gargantuar'), tribe: 'Gargantuar', desc: 'Gravestone. When revealed: Move this Zombie.', traits: ['gravestone'], abilities: ['graves_move_self'] },
+        { id: 'walrus_rider', name: 'Walrus Rider', type: 'zombie', class: 'sneaky', cost: 5, attack: 3, health: 4, rarity: 'rare', img: wikiImg('Walrus_Rider'), tribe: 'Imp', desc: 'Amphibious. Anti-Hero 3.', traits: ['amphibious', 'anti_hero_3'], abilities: [] },
+        { id: 'zombot_stomp', name: 'Zombot Stomp', type: 'trick', class: 'sneaky', cost: 7, rarity: 'rare', img: wikiImg('Zombot_Stomp'), tribe: 'Science', desc: 'Bounce all Plants on the Ground.', traits: [], abilities: [] },
+        { id: 'space_pirate', name: 'Space Pirate', type: 'zombie', class: 'sneaky', cost: 3, attack: 3, health: 2, rarity: 'rare', img: wikiImg('Space_Pirate'), tribe: 'Pirate', desc: 'Anti-Hero 2. This moves to a random lane when a Plant is played here.', traits: ['anti_hero_2'], abilities: ['on_plant_played_move'] },
+        { id: 'blowgun_imp', name: 'Blowgun Imp', type: 'zombie', class: 'sneaky', cost: 5, attack: 3, health: 3, rarity: 'rare', img: wikiImg('Blowgun_Imp'), tribe: 'Imp', desc: 'Deadly. Strikethrough. Zombie Evolution: Bounce a Plant.', traits: ['deadly', 'strikethrough'], abilities: ['zombie_evo_bounce'] },
+        { id: 'toxic_waste_imp', name: 'Toxic Waste Imp', type: 'zombie', class: 'sneaky', cost: 2, attack: 2, health: 2, rarity: 'super_rare', img: wikiImg('Toxic_Waste_Imp'), tribe: 'Imp', desc: 'Amphibious. All Imps are Deadly.', traits: ['amphibious'], abilities: ['imps_are_deadly'] },
+        { id: 'tomb_raiser_zombie', name: 'Tomb Raiser Zombie', type: 'zombie', class: 'sneaky', cost: 4, attack: 3, health: 4, rarity: 'super_rare', img: wikiImg('Tomb_Raiser_Zombie'), tribe: 'History', desc: 'Gravestone. When this hurts the Plant Hero, make a random Gravestone in a random lane.', traits: ['gravestone'], abilities: ['graves_make_grave'] },
+        { id: 'ducky_tube_zombie', name: 'Ducky Tube Zombie', type: 'zombie', class: 'sneaky', cost: 1, attack: 1, health: 1, rarity: 'super_rare', img: wikiImg('Ducky_Tube_Zombie'), tribe: 'Party', desc: 'Amphibious. This gets +1/+1 when it hurts the Plant Hero.', traits: ['amphibious'], abilities: ['on_damage_hero_plus_1'] },
+        { id: 'laser_base_alpha', name: 'Laser Base Alpha', type: 'environment', class: 'sneaky', cost: 3, rarity: 'super_rare', img: wikiImg('Laser_Base_Alpha'), tribe: 'Environment', desc: 'Zombies here get Deadly and Strikethrough.', traits: [], abilities: [] },
+        { id: 'cursed_gargolith', name: 'Cursed Gargolith', type: 'zombie', class: 'sneaky', cost: 6, attack: 7, health: 6, rarity: 'super_rare', img: wikiImg('Cursed_Gargolith'), tribe: 'Gargantuar', desc: 'End of Turn: All Gargantuars hide in Gravestones.', traits: [], abilities: ['end_of_turn_garg_grave'] },
+        { id: 'excavator_zombie', name: 'Excavator Zombie', type: 'zombie', class: 'sneaky', cost: 3, attack: 4, health: 1, rarity: 'super_rare', img: wikiImg('Excavator_Zombie'), tribe: 'Professional', desc: 'Gravestone. When revealed: Bounce an Environment and all Plants there.', traits: ['gravestone'], abilities: ['graves_bounce_environment'] },
+        { id: 'unthawed_viking', name: 'Unthawed Viking', type: 'zombie', class: 'sneaky', cost: 4, attack: 4, health: 4, rarity: 'super_rare', img: wikiImg('Unthawed_Viking'), tribe: 'Pirate', desc: 'Amphibious. When played: Freeze all Plants in the Water. Pirate Evolution: Instead, Freeze all Plants.', traits: ['amphibious'], abilities: ['on_play_freeze_water'] },
+        { id: 'zombot_sharktronic_sub', name: 'Zombot Sharktronic Sub', type: 'zombie', class: 'sneaky', cost: 6, attack: 5, health: 5, rarity: 'legendary', img: wikiImg('Zombot_Sharktronic_Sub'), tribe: 'Science', desc: 'Amphibious. When a Plant gets hurt, destroy it. When any Plant is destroyed, this gets +1.', traits: ['amphibious'], abilities: ['on_plant_hurt_destroy', 'on_plant_destroyed_plus_1'] },
+        { id: 'cryo_yeti', name: 'Cryo-Yeti', type: 'zombie', class: 'sneaky', cost: 5, attack: 3, health: 4, rarity: 'legendary', img: wikiImg('Cryo-Yeti'), tribe: 'Pet', desc: 'Gravestone. This gets +2/+2 when a Plant or Zombie is frozen. When revealed: Freeze a Plant.', traits: ['gravestone'], abilities: ['graves_freeze_on_reveal'] },
+        { id: 'zombot_aerostatic_gondola', name: 'Zombot Aerostatic Gondola', type: 'zombie', class: 'sneaky', cost: 6, attack: 5, health: 6, rarity: 'legendary', img: wikiImg('Zombot_Aerostatic_Gondola'), tribe: 'Science', desc: 'Amphibious. When this hurts the Plant Hero, it moves to a random lane and leaves behind a random Zombie.', traits: ['amphibious'], abilities: ['on_damage_hero_move_leave'] },
+        { id: 'raiding_raptor', name: 'Raiding Raptor', type: 'zombie', class: 'sneaky', cost: 3, attack: 2, health: 4, rarity: 'legendary', img: wikiImg('Raiding_Raptor'), tribe: 'Pet', desc: 'Dino-Roar: This gets +2. When this hurts the Plant Hero, Conjure a card that costs 2 or less.', traits: [], abilities: ['dino_roar_plus_2', 'on_damage_conjure_cheap'] },
     ],
 
     classColors: {
@@ -611,6 +759,55 @@ const CARD_DATA = {
         'super_rare': '#a855f7', 'legendary': '#f59e0b', 'event': '#f97316'
     }
 };
+
+const TRAIT_ICONS = {
+    'strikethrough': { icon: '⚔', label: 'Strikethrough', cssClass: 'trait-strikethrough' },
+    'anti_hero': { icon: '🎯', label: 'Anti-Hero', cssClass: 'trait-anti-hero' },
+    'frenzy': { icon: '💥', label: 'Frenzy', cssClass: 'trait-frenzy' },
+    'bullseye': { icon: '◎', label: 'Bullseye', cssClass: 'trait-bullseye' },
+    'amphibious': { icon: '🌊', label: 'Amphibious', cssClass: 'trait-amphibious' },
+    'team-up': { icon: '⊞', label: 'Team-Up', cssClass: 'trait-team-up' },
+    'armored': { icon: '🛡', label: 'Armored', cssClass: 'trait-armored' },
+    'gravestone': { icon: '🪦', label: 'Gravestone', cssClass: 'trait-gravestone' },
+    'untrickable': { icon: '✋', label: 'Untrickable', cssClass: 'trait-untrickable' },
+    'hunt': { icon: '🔍', label: 'Hunt', cssClass: 'trait-hunt' },
+    'doublestrike': { icon: '⚡', label: 'Doublestrike', cssClass: 'trait-doublestrike' },
+    'overshoot': { icon: '🏹', label: 'Overshoot', cssClass: 'trait-overshoot' },
+    'deadly': { icon: '☠', label: 'Deadly', cssClass: 'trait-deadly' }
+};
+
+function parseTrait(trait) {
+    const match = trait.match(/^([a-z][a-z_-]*)(?:_(\d+))?$/);
+    if (!match) return null;
+    const key = match[1];
+    const value = match[2] ? parseInt(match[2]) : null;
+
+    let info;
+    if (TRAIT_ICONS[key]) {
+        info = TRAIT_ICONS[key];
+    } else if (key === 'anti_hero') {
+        info = TRAIT_ICONS['anti_hero'];
+    } else if (key === 'armored') {
+        info = TRAIT_ICONS['armored'];
+    } else if (key === 'overshoot') {
+        info = TRAIT_ICONS['overshoot'];
+    } else {
+        return null;
+    }
+
+    const label = value !== null ? `${info.label} ${value}` : info.label;
+    const display = value !== null ? `${info.icon}${value}` : info.icon;
+    return { display, label, cssClass: info.cssClass };
+}
+
+function renderTraits(traits) {
+    if (!traits || !traits.length) return '';
+    const parsed = traits.map(parseTrait).filter(Boolean);
+    if (!parsed.length) return '';
+    return `<div class="card-traits">${parsed.map(t =>
+        `<span class="trait-icon ${t.cssClass}" title="${t.label}">${t.display}</span>`
+    ).join('')}</div>`;
+}
 
 function getHeroCards(heroId) {
     const hero = CARD_DATA.heroes.find(h => h.id === heroId);

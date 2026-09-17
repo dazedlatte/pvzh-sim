@@ -1,4 +1,92 @@
 const AIHelper = {
+    // 2026 Meta Tier List Data (from PvZH Vault, Aug 2026)
+    tierList: {
+        lastUpdated: '2026-08-06',
+        topCardsOverall: [
+            { name: 'Berry Blast', class: 'Kabloom', tier: 'S', score: 198.03, usage: '20.44%' },
+            { name: 'Bungee Plumber', class: 'Crazy', tier: 'S', score: 184.43, usage: '20.44%' },
+            { name: 'Forget-Me-Nuts', class: 'Guardian', tier: 'S', score: 173.24, usage: '17.13%' },
+            { name: 'Clique Peas', class: 'Mega-Grow', tier: 'S', score: 170.86, usage: '15.47%' },
+            { name: 'Bonk Choy', class: 'Mega-Grow', tier: 'S', score: 170.21, usage: '16.02%' },
+            { name: 'Teleport', class: 'Brainy', tier: 'S', score: 157.66, usage: '14.36%' },
+            { name: 'Rolling Stone', class: 'Hearty', tier: 'S', score: 150.23, usage: '17.68%' },
+            { name: 'Cheese Cutter', class: 'Beastly', tier: 'S', score: 145.80, usage: '11.05%' },
+            { name: 'Quazard', class: 'Crazy', tier: 'S', score: 145.28, usage: '11.60%' },
+            { name: 'Lima Pleurodon', class: 'Smarty', tier: 'S', score: 139.81, usage: '9.94%' },
+            { name: 'Fig', class: 'Kabloom', tier: 'S', score: 139.47, usage: '9.94%' },
+            { name: 'Going Viral', class: 'Hearty', tier: 'S', score: 132.53, usage: '14.92%' },
+            { name: 'Black Hole', class: 'Hearty', tier: 'S', score: 131.19, usage: '11.60%' },
+            { name: 'Area 22', class: 'Beastly', tier: 'S', score: 127.23, usage: '9.39%' },
+            { name: 'Galacta-Cactus', class: 'Guardian', tier: 'S', score: 125.84, usage: '9.94%' },
+            { name: 'Teleportation Zombie', class: 'Brainy', tier: 'S', score: 125.64, usage: '10.50%' },
+            { name: 'Brainana', class: 'Smarty', tier: 'S', score: 125.58, usage: '12.15%' },
+            { name: 'Starch Lord', class: 'Guardian', tier: 'S', score: 120.90, usage: '8.29%' }
+        ],
+        topByClass: {
+            guardian: { top: 'Forget-Me-Nuts', cards: ['Forget-Me-Nuts', 'Galacta-Cactus', 'Starch Lord', 'Shamrocket', 'Photosynthesizer'] },
+            kabloom: { top: 'Berry Blast', cards: ['Berry Blast', 'Fig', 'Imitater', 'Wild Berry', 'Veloci-Radish Packmate'] },
+            megaGrow: { top: 'Clique Peas', cards: ['Clique Peas', 'Bonk Choy', 'Gatling Pea', 'Espresso Fiesta', 'Fertilizer'] },
+            smarty: { top: 'Lima Pleurodon', cards: ['Lima Pleurodon', 'Brainana', 'Primal Peashooter', 'Jelly Bean', 'Rotobaga'] },
+            solar: { top: 'Li\'l Buddy', cards: ['Li\'l Buddy', 'Sun Shroom', 'Ketchup Mechanic', 'Pepper M.D.', 'Water Balloons'] },
+            beastly: { top: 'Cheese Cutter', cards: ['Cheese Cutter', 'Area 22', 'Extinction Event', 'Dog Walker', 'Cryo-Yeti'] },
+            brainy: { top: 'Teleport', cards: ['Teleport', 'Teleportation Zombie', 'Beam Me Up', 'Mustache Waxer', 'Fun-Dead Raiser'] },
+            crazy: { top: 'Bungee Plumber', cards: ['Bungee Plumber', 'Quazard', 'Quickdraw Con Man', 'Line Dancing Zombie'] },
+            hearty: { top: 'Rolling Stone', cards: ['Rolling Stone', 'Going Viral', 'Black Hole', 'Sumo Wrestler'] },
+            sneaky: { top: 'Cryo-Yeti', cards: ['Cryo-Yeti', 'Dr. Spacetime', 'Line Dancing Zombie', 'Laser Base Alpha'] }
+        },
+        archetypes: {
+            aggro: {
+                name: 'Aggro',
+                description: 'Fast, low-cost decks that aim to win by turn 5-6. Prioritize 1-2 cost cards with high attack.',
+                keyTraits: ['high attack', 'low cost', 'charge block'],
+                plantTips: 'Focus on Berries, Peas, and Mushrooms. Berry Blast is #1 overall for a reason.',
+                zombieTips: 'Crazy and Beastly excel at aggro. Bungee Plumber + Quazard is the #2 combo in the meta.'
+            },
+            control: {
+                name: 'Control',
+                description: 'Survive the early game, clear the board, win with late-game bombs. Heavy removal and healing.',
+                keyTraits: ['removal', 'healing', 'late-game'],
+                plantTips: 'Guardian + Solar is the control shell. Forget-Me-Nuts slows Zombie tricks while you build.',
+                zombieTips: 'Hearty has the best removal. Rolling Stone + Black Hole + Going Viral dominates.'
+            },
+            combo: {
+                name: 'Combo',
+                description: 'Set up specific card interactions for explosive turns. Requires planning and card draw.',
+                keyTraits: ['synergy', 'card draw', 'finisher'],
+                plantTips: 'Starch Lord roots + Fig transform combos. Brainana strips brains for huge tempo.',
+                zombieTips: 'Teleport + Teleportation Zombie lets you play zombies during tricks. The #6 and #16 cards.'
+            },
+            midrange: {
+                name: 'Midrange',
+                description: 'Flexible decks that can switch between aggro and control based on matchup.',
+                keyTraits: ['efficient stats', 'versatile', 'tempo'],
+                plantTips: 'Mega-Grow excels here with Clique Peas (#4) and Bonk Choy (#5) as efficient threats.',
+                zombieTips: 'Beastly area buffs (Area 22) and Sneaky gravestones provide strong mid-game.'
+            }
+        },
+        heroTips: {
+            green_shadow: 'Bean/Pea hybrid. Admiral Navy Bean draws cards; The Podfather buffs Peas. Brainana (#17) is your late-game finisher.',
+            solar_flare: 'Fig Lottery deck uses Fig (#11) to transform damaged plants. Li\'l Buddy and Sun Shroom generate tempo.',
+            chompzilla: 'Mega-Grow removal + Solar healing. Clique Peas (#4) gives scaling power throughout the game.',
+            grass_knuckles: 'Nut control. Forget-Me-Nuts (#3) + Starch Lord (#18) for root synergy. Galacta-Cactus (#15) punishes clears.',
+            spudow: 'Kabloom tricks + Guardian defense. Berry Blast (#1) is your best removal. Fig (#11) transforms into threats.',
+            nightcap: 'Mushroom swarm or Bean aggro. Lima Pleurodon (#10) generates Beanstalks for late-game.',
+            captain_combustible: 'Bonus Attack combos. Gatling Pea (A-tier) + Espresso Fiesta (A-tier) for burst damage.',
+            citron: 'Bean control with Smarty. Brainana (#17) strips brains. Lima Pleurodon (#10) provides value.',
+            super_brainz: 'Teleport trickster. Teleport (#6) + Teleportation Zombie (#16) lets you play zombies during tricks.',
+            the_smash: 'Pet midrange. Cheese Cutter (#8) conjures Gourmet cards. Area 22 (#14) buffs your board.',
+            impfinity: 'Crazy aggro. Bungee Plumber (#2) + Quazard (#9) for early pressure and superpowers.',
+            brain_freeze: 'Beastly freeze. Cheese Cutter (#8) + Area 22 (#14) for strong trades and board control.',
+            professor_brainstorm: 'Trickster combo. Teleport (#6) + Teleportation Zombie (#16) for free trickster plays.',
+            electric_boogaloo: 'Dancing midrange. Line Dancing Zombie (A-tier) + Quazard (#9) for tempo and value.',
+            rustbolt: 'Hearty control. Rolling Stone (#7) + Going Viral (#12) + Black Hole (#13) for board dominance.',
+            immorticia: 'Beastly brain. Cheese Cutter (#8) + Teleportation Zombie (#16) for card advantage.',
+            neptuna: 'Gravestone midrange. Dr. Spacetime (A-tier) + Laser Base Alpha (A-tier) for gravestone synergy.',
+            z_mech: 'Sports aggro. Going Viral (#12) buffs your entire board. Rolling Stone (#7) removes early threats.',
+            huge_gigantacus: 'Brainy combo. Teleport (#6) + Quazard (#9) for superpower generation and big plays.'
+        }
+    },
+
     // Synergy definitions for deck building
     synergies: {
         mushroom: {
@@ -75,121 +163,140 @@ const AIHelper = {
         }
     },
 
-    // Deck suggestions per hero
+    // Deck suggestions per hero (updated with 2026 meta data)
     heroDecks: {
         green_shadow: {
             name: 'BPL (Bean Pea Lane)',
-            strategy: 'Aggressive bean/pea deck that uses Admiral Navy Bean for draw and The Podfather to buff Peas.',
+            strategy: 'Aggressive bean/pea deck. Admiral Navy Bean draws; The Podfather buffs Peas. Brainana (#17) strips brains late-game.',
             archetype: 'aggressive',
-            keyCards: ['peashooter','torchwood','the_podfather','admiral_navy_bean','repeater','brainana']
+            keyCards: ['peashooter','torchwood','the_podfather','admiral_navy_bean','repeater','brainana'],
+            metaNotes: 'Clique Peas (#4) and Bonk Choy (#5) from Mega-Grow are excellent additions. Forget-Me-Nuts (#3) slows zombie tricks.'
         },
         solar_flare: {
             name: 'Fig Lottery',
-            strategy: 'Control deck using Solar class removal and strong late-game flowers.',
+            strategy: 'Control deck using Fig (#11) to transform damaged plants. Sun Shroom and Li\'l Buddy generate tempo.',
             archetype: 'control',
-            keyCards: ['sunflower','twin_sunflower','bloomerang','power_flower','briar_rose','squash']
+            keyCards: ['sunflower','twin_sunflower','bloomerang','power_flower','briar_rose','fig'],
+            metaNotes: 'Fig is #11 overall. Imitater (A-tier) copies your best plants. Berry Blast (#1) is your best removal.'
         },
         chompzilla: {
             name: 'Solar Mega',
-            strategy: 'Uses Solar removal with Mega-Grow buffs for big Chomper finishes.',
+            strategy: 'Mega-Grow threats with Solar removal. Clique Peas (#4) scales throughout the game.',
             archetype: 'midrange',
-            keyCards: ['chomper','three_headed_chomper','fertilize','plant_food','squash','cornucopia']
+            keyCards: ['chomper','three_headed_chomper','fertilize','plant_food','clique_peas','bonk_choy'],
+            metaNotes: 'Clique Peas and Bonk Choy are both S-tier. Espresso Fiesta (A-tier) enables bonus attack combos.'
         },
         grass_knuckles: {
             name: 'Redundancy',
-            strategy: 'Nut-based defensive deck that chips with Bullseye and Mirror-Nut.',
+            strategy: 'Nut/Root control. Forget-Me-Nuts (#3) slows tricks; Starch Lord (#18) generates roots.',
             archetype: 'control',
-            keyCards: ['wall_nut','mirror_nut','pismashio','pea_nut','fertilize','plant_food']
+            keyCards: ['wall_nut','mirror_nut','forget_me_nuts','starch_lord','galacta_cactus','shamrocket'],
+            metaNotes: 'Forget-Me-Nuts is #3 overall. Galacta-Cactus (#15) punishes board clears. Shamrocket (A-tier) removes big threats.'
         },
         spudow: {
             name: 'Soteria',
-            strategy: 'Explosive Kabloom tricks with Guardian defense.',
+            strategy: 'Kabloom tricks + Guardian defense. Berry Blast (#1) and Fig (#11) are your stars.',
             archetype: 'combo',
-            keyCards: ['wall_nut','cherry_bomb','berry_blast','punish_shroom','doom_shroom','kernel_corn']
+            keyCards: ['wall_nut','cherry_bomb','berry_blast','fig','imitater','galacta_cactus'],
+            metaNotes: 'Berry Blast is #1 overall. Fig transforms damaged plants into random threats. Imitater copies your best plants.'
         },
         nightcap: {
             name: 'Mushroom Madness',
-            strategy: 'Swarm with mushrooms and buff with Buff-Shroom.',
+            strategy: 'Mushroom swarm or Bean aggro. Lima Pleurodon (#10) generates Beanstalks.',
             archetype: 'aggressive',
-            keyCards: ['button_mushroom','shroom_for_two','buff_shroom','punish_shroom','mushroom_ringleader','pineclone']
+            keyCards: ['button_mushroom','shroom_for_two','buff_shroom','lima_pleurodon','brainana','punish_shroom'],
+            metaNotes: 'Lima Pleurodon is #10 overall and generates value. Brainana (#17) strips brains for huge tempo swings.'
         },
         captain_combustible: {
             name: 'Reflourished',
-            strategy: 'Bonus Attack combos with Repeater and Plant Food.',
+            strategy: 'Bonus Attack combos. Gatling Pea (A-tier) + Espresso Fiesta (A-tier) for burst.',
             archetype: 'combo',
-            keyCards: ['repeater','the_podfather','plant_food','re_peat_moss','party_thyme','espresso_fiesta']
+            keyCards: ['repeater','the_podfather','plant_food','gatling_pea','espresso_fiesta','bonk_choy'],
+            metaNotes: 'Gatling Pea has Double Strike and Pea Evolution. Bonk Choy (#5) is a great 1-drop for early pressure.'
         },
         citron: {
             name: 'Bean Control',
-            strategy: 'Bounce everything with Smarty while building a bean army.',
+            strategy: 'Bean control with Smarty. Brainana (#17) strips brains; Lima Pleurodon (#10) generates value.',
             archetype: 'control',
-            keyCards: ['admiral_navy_bean','jumping_bean','sapping_sinew','brainana','winter_melon','the_big_gigantic']
+            keyCards: ['admiral_navy_bean','lima_pleurodon','brainana','primal_peashooter','jelly_bean','rotobaga'],
+            metaNotes: 'Brainana is #17 overall. Lima Pleurodon generates Beanstalks for late-game. Jelly Bean (A-tier) bounces threats.'
         },
         super_brainz: {
             name: 'Teleport Trickster',
-            strategy: 'Play Trickster for cheap with Teleportation Zombie and Brainy tricks.',
+            strategy: 'Teleport (#6) + Teleportation Zombie (#16) lets you play zombies during tricks.',
             archetype: 'combo',
-            keyCards: ['trickster','teleportation_zombie','mad_scientist','beam_me_up','interdimensional_zombie']
+            keyCards: ['trickster','teleportation_zombie','teleport','beam_me_up','mustache_waxer','fun_dead_raiser'],
+            metaNotes: 'Teleport is #6 overall; Teleportation Zombie is #16. Mustache Waxer (A-tier) discounts Mustache zombies.'
         },
         the_smash: {
             name: 'Smash Pet',
-            strategy: 'Pet synergy with Cat Lady and Ancient Vimpire for big stats.',
+            strategy: 'Beastly midrange. Cheese Cutter (#8) conjures Gourmet; Area 22 (#14) buffs your board.',
             archetype: 'midrange',
-            keyCards: ['cat_lady','vimpire','ancient_vimpire','zombie_chimp','the_smash','all_star_zombie']
+            keyCards: ['cheese_cutter','area_22','cat_lady','ancient_vimpire','going_viral','extinction_event'],
+            metaNotes: 'Cheese Cutter is #8 overall. Area 22 is #14. Going Viral (#12) buffs your entire board with Frenzy.'
         },
         impfinity: {
             name: 'Crazy Rush',
-            strategy: 'Overwhelm with cheap Crazy zombies and Imps.',
+            strategy: 'Crazy aggro. Bungee Plumber (#2) + Quazard (#9) for early pressure and superpowers.',
             archetype: 'aggressive',
-            keyCards: ['backup_dancer','exploding_imp','disco_zombie','valkyrie','quazard','disco_tron_3000']
+            keyCards: ['bungee_plumber','quazard','quickdraw_con_man','line_dancing_zombie','valkyrie','disco_tron_3000'],
+            metaNotes: 'Bungee Plumber is #2 overall. Quazard is #9. Quickdraw Con Man (A-tier) punishes card draw.'
         },
         brain_freeze: {
             name: 'Freeze & Squeeze',
-            strategy: 'Freeze plants with Beastly zombies and burst with Frenzy.',
+            strategy: 'Beastly control. Cheese Cutter (#8) + Area 22 (#14) for strong trades.',
             archetype: 'midrange',
-            keyCards: ['penguin_zombie','vimpire','cheese_cutter','all_star_zombie','going_viral']
+            keyCards: ['cheese_cutter','area_22','cryo_yeti','dog_walker','going_viral','extinction_event'],
+            metaNotes: 'Cheese Cutter is #8. Area 22 is #14. Cryo-Yeti (A-tier) freezes and has good stats.'
         },
         professor_brainstorm: {
             name: 'Trickster Engine',
-            strategy: 'Reduce Trickster cost with Brainy tricks and play it for free.',
+            strategy: 'Teleport (#6) + Teleportation Zombie (#16) for free trickster plays.',
             archetype: 'combo',
-            keyCards: ['trickster','mad_scientist','teleport','beam_me_up','teacher_zombie']
+            keyCards: ['trickster','teleport','teleportation_zombie','beam_me_up','mustache_waxer','mad_scientist'],
+            metaNotes: 'Teleport is #6. Teleportation Zombie is #16. Beam Me Up (A-tier) summons a 2/1 Imp.'
         },
         electric_boogaloo: {
             name: 'Dance Floor',
-            strategy: 'Summon Dancing zombies and buff with Zombie King.',
+            strategy: 'Dancing midrange. Quazard (#9) + Line Dancing Zombie (A-tier) for tempo.',
             archetype: 'midrange',
-            keyCards: ['disco_zombie','backup_dancer','zombie_king','disco_tron_3000','valkyrie']
+            keyCards: ['quazard','line_dancing_zombie','disco_zombie','backup_dancer','valkyrie','disco_tron_3000'],
+            metaNotes: 'Quazard is #9 overall. Line Dancing Zombie (A-tier) has Gravestone and does bonus damage.'
         },
         rustbolt: {
             name: 'Control Rust',
-            strategy: 'Remove everything with Hearty tricks and slam big zombies.',
+            strategy: 'Hearty control. Rolling Stone (#7) + Going Viral (#12) + Black Hole (#13).',
             archetype: 'control',
-            keyCards: ['rolling_stone','weed_spray','team_mascot','all_star_zombie','zombot_blast_bot']
+            keyCards: ['rolling_stone','going_viral','black_hole','sumo_wrestler','weed_spray','team_mascot'],
+            metaNotes: 'Rolling Stone is #7. Going Viral is #12. Black Hole is #13. This is the strongest control shell in the meta.'
         },
         immorticia: {
             name: 'Beastly Brain',
-            strategy: 'Pet synergy with Brainy card draw for a strong midrange game.',
+            strategy: 'Beastly + Brainy. Cheese Cutter (#8) + Teleportation Zombie (#16) for value.',
             archetype: 'midrange',
-            keyCards: ['cat_lady','ancient_vimpire','mad_scientist','trickster','interdimensional_zombie']
+            keyCards: ['cheese_cutter','teleportation_zombie','area_22','cat_lady','mad_scientist','trickster'],
+            metaNotes: 'Cheese Cutter (#8) and Area 22 (#14) are both S-tier. Teleportation Zombie enables trick-time plays.'
         },
         neptuna: {
             name: 'Gravestone Grind',
-            strategy: 'Gravestone zombies with Headstone Carver buffs.',
+            strategy: 'Gravestone midrange. Dr. Spacetime (A-tier) + Laser Base Alpha (A-tier).',
             archetype: 'midrange',
-            keyCards: ['headstone_carver','ambush','space_ninja','cursed_gargantuar','all_star_zombie']
+            keyCards: ['dr_spacetime','laser_base_alpha','line_dancing_zombie','cryo_yeti','headstone_carver','space_ninja'],
+            metaNotes: 'Dr. Spacetime and Laser Base Alpha are A-tier. Cryo-Yeti (A-tier) freezes and has good stats.'
         },
         z_mech: {
             name: 'Sports Z-Mech',
-            strategy: 'Sports Zombie synergy with team-wide buffs.',
+            strategy: 'Sports aggro. Going Viral (#12) buffs your board; Rolling Stone (#7) removes threats.',
             archetype: 'aggressive',
-            keyCards: ['team_mascot','zombie_coach','sports_zombie','all_star_zombie','going_viral']
+            keyCards: ['going_viral','rolling_stone','team_mascot','zombie_coach','all_star_zombie','black_hole'],
+            metaNotes: 'Going Viral is #12 overall. Rolling Stone is #7. Black Hole (#13) disrupts plant positioning.'
         },
         huge_gigantacus: {
             name: 'Gargantuan Rush',
-            strategy: 'Brainy ramp into huge threats and Bad Moon Rising.',
+            strategy: 'Brainy combo. Teleport (#6) + Quazard (#9) for superpower generation.',
             archetype: 'combo',
-            keyCards: ['trickster','teleportation_zombie','interdimensional_zombie','beam_me_up','quazard']
+            keyCards: ['teleport','quazard','teleportation_zombie','beam_me_up','interdimensional_zombie','trickster'],
+            metaNotes: 'Teleport is #6. Quazard is #9. Teleportation Zombie (#16) enables trick-time zombie plays.'
         }
     },
 
