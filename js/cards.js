@@ -760,20 +760,24 @@ const CARD_DATA = {
     }
 };
 
+function traitImg(name) {
+    return `https://plantsvszombies.wiki.gg/images/thumb/PvZH_${name}_Icon.png/20px-PvZH_${name}_Icon.png`;
+}
+
 const TRAIT_ICONS = {
-    'strikethrough': { icon: '\u2716', label: 'Strikethrough', cssClass: 'trait-strikethrough' },
-    'anti_hero': { icon: '\u25CE', label: 'Anti-Hero', cssClass: 'trait-anti-hero' },
-    'frenzy': { icon: '\u2694', label: 'Frenzy', cssClass: 'trait-frenzy' },
-    'bullseye': { icon: '\u25C9', label: 'Bullseye', cssClass: 'trait-bullseye' },
-    'amphibious': { icon: '\u223F', label: 'Amphibious', cssClass: 'trait-amphibious' },
-    'team-up': { icon: '\u2B21', label: 'Team-Up', cssClass: 'trait-team-up' },
-    'armored': { icon: '\u2EA2', label: 'Armored', cssClass: 'trait-armored' },
-    'gravestone': { icon: '\u2571', label: 'Gravestone', cssClass: 'trait-gravestone' },
-    'untrickable': { icon: '\u29D8', label: 'Untrickable', cssClass: 'trait-untrickable' },
-    'hunt': { icon: '\u2740', label: 'Hunt', cssClass: 'trait-hunt' },
-    'doublestrike': { icon: '\u27A3', label: 'Doublestrike', cssClass: 'trait-doublestrike' },
-    'overshoot': { icon: '\u27B2', label: 'Overshoot', cssClass: 'trait-overshoot' },
-    'deadly': { icon: '\u2620', label: 'Deadly', cssClass: 'trait-deadly' }
+    'strikethrough': { icon: `<img src="${traitImg('Strikethrough')}" alt="Strikethrough" width="14" height="14" onerror="this.style.display='none'">`, label: 'Strikethrough', cssClass: 'trait-strikethrough' },
+    'anti_hero': { icon: `<img src="${traitImg('Anti-Hero')}" alt="Anti-Hero" width="14" height="14" onerror="this.style.display='none'">`, label: 'Anti-Hero', cssClass: 'trait-anti-hero' },
+    'frenzy': { icon: `<img src="${traitImg('Frenzy')}" alt="Frenzy" width="14" height="14" onerror="this.style.display='none'">`, label: 'Frenzy', cssClass: 'trait-frenzy' },
+    'bullseye': { icon: `<img src="${traitImg('Truestrike')}" alt="Bullseye" width="14" height="14" onerror="this.style.display='none'">`, label: 'Bullseye', cssClass: 'trait-bullseye' },
+    'amphibious': { icon: `<img src="${traitImg('Amphibious')}" alt="Amphibious" width="14" height="14" onerror="this.style.display='none'">`, label: 'Amphibious', cssClass: 'trait-amphibious' },
+    'team-up': { icon: `<img src="${traitImg('Team-Up')}" alt="Team-Up" width="14" height="14" onerror="this.style.display='none'">`, label: 'Team-Up', cssClass: 'trait-team-up' },
+    'armored': { icon: `<img src="${traitImg('Armored')}" alt="Armored" width="14" height="14" onerror="this.style.display='none'">`, label: 'Armored', cssClass: 'trait-armored' },
+    'gravestone': { icon: `<img src="${traitImg('Gravestone')}" alt="Gravestone" width="14" height="14" onerror="this.style.display='none'">`, label: 'Gravestone', cssClass: 'trait-gravestone' },
+    'untrickable': { icon: `<img src="${traitImg('Untrickable')}" alt="Untrickable" width="14" height="14" onerror="this.style.display='none'">`, label: 'Untrickable', cssClass: 'trait-untrickable' },
+    'hunt': { icon: `<img src="${traitImg('Hunt')}" alt="Hunt" width="14" height="14" onerror="this.style.display='none'">`, label: 'Hunt', cssClass: 'trait-hunt' },
+    'doublestrike': { icon: `<img src="${traitImg('Doublestrike')}" alt="Doublestrike" width="14" height="14" onerror="this.style.display='none'">`, label: 'Doublestrike', cssClass: 'trait-doublestrike' },
+    'overshoot': { icon: `<img src="${traitImg('Overshoot')}" alt="Overshoot" width="14" height="14" onerror="this.style.display='none'">`, label: 'Overshoot', cssClass: 'trait-overshoot' },
+    'deadly': { icon: `<img src="${traitImg('Deadly')}" alt="Deadly" width="14" height="14" onerror="this.style.display='none'">`, label: 'Deadly', cssClass: 'trait-deadly' }
 };
 
 function parseTrait(trait) {
@@ -796,7 +800,7 @@ function parseTrait(trait) {
     }
 
     const label = value !== null ? `${info.label} ${value}` : info.label;
-    const display = value !== null ? `${info.icon}${value}` : info.icon;
+    const display = value !== null ? `${info.icon}<span class="trait-val">${value}</span>` : info.icon;
     return { display, label, cssClass: info.cssClass };
 }
 

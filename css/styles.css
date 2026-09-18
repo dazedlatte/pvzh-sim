@@ -374,10 +374,23 @@ main {
     color: #fff;
     display: inline-flex;
     align-items: center;
-    gap: 1px;
+    gap: 2px;
     white-space: nowrap;
     font-weight: 600;
     letter-spacing: -0.02em;
+}
+
+.trait-icon img {
+    display: block;
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.trait-icon .trait-val {
+    font-size: 0.6rem;
+    line-height: 1;
 }
 
 .trait-icon.trait-strikethrough { background: rgba(251,191,36,0.35); color: #fbbf24; }
@@ -401,6 +414,11 @@ main {
 .board-card .trait-icon {
     font-size: 0.55rem;
     padding: 0 2px;
+}
+
+.board-card .trait-icon img {
+    width: 12px;
+    height: 12px;
 }
 
 .card-rarity {
