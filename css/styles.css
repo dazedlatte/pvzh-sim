@@ -183,8 +183,23 @@ main {
 
 .deck-actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 8px;
     flex-wrap: wrap;
+    align-items: center;
+}
+
+.hacked-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: var(--accent-red);
+    cursor: pointer;
+    user-select: none;
+}
+
+.hacked-toggle input[type="checkbox"] {
+    accent-color: var(--accent-red);
 }
 
 .filter-bar {
@@ -351,7 +366,7 @@ main {
 }
 
 .trait-icon {
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     line-height: 1;
     padding: 1px 3px;
     border-radius: 4px;
@@ -363,11 +378,6 @@ main {
     white-space: nowrap;
     font-weight: 600;
     letter-spacing: -0.02em;
-}
-
-.trait-icon svg {
-    display: block;
-    flex-shrink: 0;
 }
 
 .trait-icon.trait-strikethrough { background: rgba(251,191,36,0.35); color: #fbbf24; }
@@ -389,13 +399,8 @@ main {
 }
 
 .board-card .trait-icon {
-    font-size: 0.5rem;
+    font-size: 0.55rem;
     padding: 0 2px;
-}
-
-.board-card .trait-icon svg {
-    width: 10px;
-    height: 10px;
 }
 
 .card-rarity {

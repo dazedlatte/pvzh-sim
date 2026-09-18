@@ -3,6 +3,7 @@ const DeckBuilder = {
     selectedHero: null,
     maxDeckSize: 40,
     maxCopies: 4,
+    hackedMode: false,
 
     init() {
         this.loadDeck();
@@ -18,6 +19,11 @@ const DeckBuilder = {
         document.getElementById('filter-type').addEventListener('change', () => this.renderCardCollection());
         document.getElementById('filter-cost').addEventListener('change', () => this.renderCardCollection());
         document.getElementById('save-deck').addEventListener('click', () => this.saveDeck());
+        document.getElementById('hacked-deck-toggle').addEventListener('change', (e) => {
+            this.hackedMode = e.target.checked;
+            this.renderCardCollection();
+            this.showToast(this.hackedMode ? 'Hacked Mode ON: unlimited copies' : 'Hacked Mode OFF: 4 copies max', 'info');
+        });
         document.getElementById('clear-deck').addEventListener('click', () => this.clearDeck());
         document.getElementById('export-deck').addEventListener('click', () => this.exportDeck());
         document.getElementById('import-deck').addEventListener('click', () => this.importDeck());
@@ -207,7 +213,7 @@ const DeckBuilder = {
             return;
         }
         const currentCount = this.currentDeck.filter(c => c.id === card.id).length;
-        if (currentCount >= this.maxCopies) {
+        if (!this.hackedMode && currentCount >= this.maxCopies) {
             this.showToast(`Maximum ${this.maxCopies} copies of ${card.name}`, 'error');
             return;
         }
@@ -351,7 +357,7 @@ const DeckBuilder = {
                     errors.push(`${name} is not in ${hero.name}'s classes`);
                     continue;
                 }
-                const addCount = Math.min(count, this.maxCopies);
+                const addCount = this.hackedMode ? count : Math.min(count, this.maxCopies);
                 for (let j = 0; j < addCount; j++) {
                     newDeck.push({ ...card });
                 }
