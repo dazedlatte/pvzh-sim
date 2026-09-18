@@ -626,6 +626,7 @@ main {
 .zombie-slot.valid-target, .plant-slot.valid-target {
     background: rgba(74, 222, 128, 0.15);
     border: 2px dashed var(--accent-green);
+    cursor: pointer;
 }
 
 .zombie-slot.valid-target:hover, .plant-slot.valid-target:hover {

@@ -43,7 +43,6 @@ const Battle = {
         this.selectedEnemyHero = enemyHeroEl.dataset.heroId;
         this.aiDifficulty = document.getElementById('ai-difficulty').value;
 
-        // Enforce plant vs zombie
         const playerIsPlant = this.isPlantHero(this.selectedPlayerHero);
         const playerIsZombie = this.isZombieHero(this.selectedPlayerHero);
         const enemyIsPlant = this.isPlantHero(this.selectedEnemyHero);
@@ -61,7 +60,6 @@ const Battle = {
         const playerHero = CARD_DATA.heroes.find(h => h.id === this.selectedPlayerHero);
         const enemyHero = CARD_DATA.heroes.find(h => h.id === this.selectedEnemyHero);
 
-        // Build decks from hero's classes
         const playerDeckCards = getHeroCards(this.selectedPlayerHero)
             .filter(c => c.type !== 'hero')
             .sort(() => Math.random() - 0.5)
@@ -73,19 +71,23 @@ const Battle = {
 
         this.state = {
             turn: 1,
-            phase: 'zombies_play', // zombies_play, plants_play, zombie_tricks, fight
+            phase: 'zombies_play',
             player: {
                 hero: { ...playerHero, currentHP: playerHero.hp },
                 deck: playerDeckCards.map(c => ({ ...c, uid: this.uid() })),
                 hand: [],
                 sun: 1,
                 maxSun: 1,
+                brains: 1,
+                maxBrains: 1,
                 superpowers: [...playerHero.superpowers]
             },
             enemy: {
                 hero: { ...enemyHero, currentHP: enemyHero.hp },
                 deck: enemyDeckCards.map(c => ({ ...c, uid: this.uid() })),
                 hand: [],
+                sun: 1,
+                maxSun: 1,
                 brains: 1,
                 maxBrains: 1,
                 superpowers: [...enemyHero.superpowers]
@@ -98,10 +100,10 @@ const Battle = {
             })),
             log: [],
             gameOver: false,
-            winner: null
+            winner: null,
+            _pendingPlay: undefined
         };
 
-        // Draw starting hands (4 cards each)
         for (let i = 0; i < 4; i++) {
             this.drawCard('player');
             this.drawCard('enemy');
@@ -112,9 +114,8 @@ const Battle = {
         document.getElementById('battle-log').style.display = 'block';
         document.getElementById('game-over').style.display = 'none';
 
-        this.updateUI();
         this.log(`${playerHero.icon} ${playerHero.name} vs ${enemyHero.icon} ${enemyHero.name}!`);
-        this.log('Zombies play first!');
+        this.startTurn();
     },
 
     uid() {
@@ -135,16 +136,23 @@ const Battle = {
         if (!card) return false;
 
         const cost = card.cost || 0;
-        const resources = who === 'player' ? p.sun : p.brains;
-        if (cost > resources) {
-            this.log(`Not enough ${who === 'player' ? 'Sun' : 'Brains'}!`, 'error');
+
+        // Use the correct resource based on card type and who is playing
+        let resource;
+        if (card.type === 'zombie') {
+            resource = 'brains';
+        } else {
+            resource = 'sun';
+        }
+
+        if (cost > p[resource]) {
+            this.log(`Not enough ${resource === 'brains' ? 'Brains' : 'Sun'}!`, 'error');
             return false;
         }
 
         const boardSlot = this.state.board[lane];
         if (!boardSlot) return false;
 
-        // Check if slot is occupied
         if (card.type === 'plant' && boardSlot.plant) {
             this.log('Lane already occupied!', 'error');
             return false;
@@ -154,14 +162,9 @@ const Battle = {
             return false;
         }
 
-        // Deduct cost
-        if (who === 'player') p.sun -= cost;
-        else p.brains -= cost;
-
-        // Remove from hand
+        p[resource] -= cost;
         p.hand.splice(handIndex, 1);
 
-        // Place on board
         const boardCard = {
             ...card,
             currentAttack: card.attack || 0,
@@ -193,9 +196,10 @@ const Battle = {
         abilities.forEach(ability => {
             if (ability === 'damage_2') {
                 // Bungee Plumber - 2 damage to a zombie
-                const targetSlot = this.findBestTarget(target);
-                if (targetSlot) {
-                    this.dealDamageToUnit(targetSlot, target === 'enemy' ? 'zombie' : 'plant', 2);
+                const slot = this.findBestTarget(target);
+                if (slot && slot.zombie) {
+                    slot.zombie.currentHealth -= 2;
+                    this.log(`Bungee Plumber dealt 2 to ${slot.zombie.name}!`, 'damage');
                 }
             } else if (ability === 'heal_4_draw') {
                 this.state[who].hero.currentHP = Math.min(this.state[who].hero.hp, this.state[who].hero.currentHP + 4);
@@ -204,9 +208,10 @@ const Battle = {
             } else if (ability === 'bounce_zombie') {
                 const slot = this.findBestTarget(target);
                 if (slot && slot.zombie) {
+                    const bouncedName = slot.zombie.name;
                     this.state[who].hand.push(slot.zombie);
                     slot.zombie = null;
-                    this.log(`Bounced ${slot.zombie?.name || 'zombie'}!`);
+                    this.log(`Bounced ${bouncedName} back to hand!`);
                 }
             } else if (ability === 'all_plants_plus_2_str') {
                 this.state.board.forEach(slot => {
@@ -236,7 +241,10 @@ const Battle = {
         abilities.forEach(ability => {
             if (ability === 'on_play_damage_3' || ability === 'damage_3') {
                 const slot = this.findBestTarget(target);
-                if (slot) this.dealDamageToUnit(target === 'enemy' ? 'zombie' : 'plant', 3, lane);
+                if (slot) {
+                    if (target === 'enemy' && slot.zombie) slot.zombie.currentHealth -= 3;
+                    else if (target === 'player' && slot.plant) slot.plant.currentHealth -= 3;
+                }
             } else if (ability === 'on_play_freeze_zombie') {
                 const slot = this.state.board[lane];
                 if (slot && slot.zombie && slot.zombie.owner === target) {
@@ -343,8 +351,11 @@ const Battle = {
                     }
                 }
             } else if (ability === 'on_play_damage_2') {
-                const slot = this.findBestTarget(target);
-                if (slot) this.dealDamageToUnit(target, 2, lane);
+                const slot = this.state.board[lane];
+                if (slot) {
+                    if (target === 'enemy' && slot.zombie) slot.zombie.currentHealth -= 2;
+                    else if (target === 'player' && slot.plant) slot.plant.currentHealth -= 2;
+                }
             } else if (ability === 'on_play_damage_zombie_5') {
                 const slot = this.state.board[lane];
                 if (slot && slot.zombie) {
@@ -360,10 +371,14 @@ const Battle = {
                 this.log(`Halved ${this.state[target].hero.name}'s HP!`);
             } else if (ability === 'on_play_wall_nut_bowling') {
                 this.state.board.forEach((slot, i) => {
+                    if (slot.zombie) {
+                        slot.zombie.currentHealth -= 6;
+                        this.log(`Wall-Nut Bowling dealt 6 to ${slot.zombie.name}!`, 'damage');
+                    }
                     if (!slot.plant) {
                         slot.plant = {
                             name: 'Wall-Nut', icon: '🥜', type: 'plant', tribe: 'Nut',
-                            currentAttack: 6, currentHealth: 6, owner: who, traits: ['team-up'],
+                            currentAttack: 0, currentHealth: 6, owner: who, traits: ['team-up'],
                             uid: this.uid()
                         };
                     }
@@ -406,8 +421,15 @@ const Battle = {
                     };
                 });
             } else if (ability === 'on_play_damage_hero_3') {
-                this.state[target].hero.currentHP -= 3;
-                this.log(`Trickster dealt 3 damage to ${this.state[target].hero.name}!`, 'damage');
+                // Trickster: does a Bonus Attack
+                const slot = this.state.board[lane];
+                if (slot?.zombie && slot.zombie.owner === who) {
+                    this.doBonusAttack(slot.zombie, lane);
+                    this.log(`${slot.zombie.name} did a Bonus Attack!`, 'damage');
+                } else {
+                    this.state[target].hero.currentHP -= 3;
+                    this.log(`Trickster dealt 3 damage to ${this.state[target].hero.name}!`, 'damage');
+                }
             } else if (ability === 'on_play_conjure') {
                 const allCards = CARD_DATA.cards;
                 const conjured = allCards[Math.floor(Math.random() * allCards.length)];
@@ -522,6 +544,24 @@ const Battle = {
                     this.state.board[lane+1].zombie.frozen = true;
                     this.state.board[lane+1].zombie.currentHealth -= 2;
                 }
+            } else if (ability === 'on_play_make_random_plants') {
+                // Cornucopia: make a random plant in each OTHER lane
+                this.state.board.forEach((slot, i) => {
+                    if (i !== lane && !slot.plant) {
+                        const plantCards = CARD_DATA.cards.filter(c => c.type === 'plant');
+                        if (plantCards.length) {
+                            const rand = plantCards[Math.floor(Math.random() * plantCards.length)];
+                            slot.plant = {
+                                ...rand,
+                                currentAttack: rand.attack || 1,
+                                currentHealth: rand.health || 1,
+                                owner: who,
+                                uid: this.uid()
+                            };
+                        }
+                    }
+                });
+                this.log('Cornucopia made random Plants!');
             }
         });
     },
@@ -570,6 +610,8 @@ const Battle = {
 
     fightPhase() {
         this.log('--- Fight Phase ---');
+        const enemies = { player: 'enemy', enemy: 'player' };
+
         for (let i = 0; i < 5; i++) {
             const slot = this.state.board[i];
             if (!slot) continue;
@@ -577,34 +619,87 @@ const Battle = {
             const plant = slot.plant;
             const zombie = slot.zombie;
 
-            if (plant && zombie) {
-                // They fight each other
-                zombie.currentHealth -= plant.currentAttack;
-                plant.currentHealth -= zombie.currentAttack;
-                this.log(`${plant.name} (⚔${plant.currentAttack}) vs ${zombie.name} (⚔${zombie.currentAttack})`, 'damage');
+            // Frozen units skip combat
+            if (plant && plant.frozen) {
+                plant.frozen = false;
+                this.log(`${plant.name} is frozen and can't attack!`);
+            }
+            if (zombie && zombie.frozen) {
+                zombie.frozen = false;
+                this.log(`${zombie.name} is frozen and can't attack!`);
+            }
 
-                // Check for abilities
+            // Unit combat
+            if (plant && zombie && !plant.frozen && !zombie.frozen) {
+                const plantDmg = plant.currentAttack;
+                const zombieDmg = zombie.currentAttack;
+
+                // Apply damage
+                zombie.currentHealth -= plantDmg;
+                plant.currentHealth -= zombieDmg;
+                this.log(`${plant.name} (⚔${plantDmg}) vs ${zombie.name} (⚔${zombieDmg})`, 'damage');
+
+                // Deadly: instantly kill the unit if this unit has deadly
+                if (plant.traits?.includes('deadly') && zombie.currentHealth > 0) {
+                    zombie.currentHealth = 0;
+                    this.log(`${plant.name} Deadly! ${zombie.name} destroyed!`);
+                }
+                if (zombie.traits?.includes('deadly') && plant.currentHealth > 0) {
+                    plant.currentHealth = 0;
+                    this.log(`${zombie.name} Deadly! ${plant.name} destroyed!`);
+                }
+
+                // Strikethrough: excess damage goes to hero
                 if (plant.traits?.includes('strikethrough') && zombie.currentHealth <= 0) {
-                    this.state.enemy.hero.currentHP -= plant.currentAttack;
-                    this.log(`${plant.name} Strikethrough hit hero!`, 'damage');
+                    const spillover = Math.abs(zombie.currentHealth);
+                    this.state[enemies[plant.owner]].hero.currentHP -= spillover;
+                    this.log(`${plant.name} Strikethrough hit hero for ${spillover}!`, 'damage');
                 }
                 if (zombie.traits?.includes('strikethrough') && plant.currentHealth <= 0) {
-                    this.state.player.hero.currentHP -= zombie.currentAttack;
-                    this.log(`${zombie.name} Strikethrough hit hero!`, 'damage');
+                    const spillover = Math.abs(plant.currentHealth);
+                    this.state[enemies[zombie.owner]].hero.currentHP -= spillover;
+                    this.log(`${zombie.name} Strikethrough hit hero for ${spillover}!`, 'damage');
                 }
+
+                // Anti-hero: deal bonus damage to hero during unit combat
+                if (plant.traits?.some(t => t.startsWith('anti_hero')) && plantDmg > 0) {
+                    this.state[enemies[plant.owner]].hero.currentHP -= plantDmg;
+                    this.log(`${plant.name} Anti-Hero dealt ${plantDmg} to hero!`, 'damage');
+                }
+                if (zombie.traits?.some(t => t.startsWith('anti_hero')) && zombieDmg > 0) {
+                    this.state[enemies[zombie.owner]].hero.currentHP -= zombieDmg;
+                    this.log(`${zombie.name} Anti-Hero dealt ${zombieDmg} to hero!`, 'damage');
+                }
+
+                // Doublestrike: attack twice
+                if (plant.traits?.includes('doublestrike') && zombie.currentHealth > 0) {
+                    zombie.currentHealth -= plantDmg;
+                    this.log(`${plant.name} Doublestrike hit ${zombie.name} again for ${plantDmg}!`, 'damage');
+                }
+                if (zombie.traits?.includes('doublestrike') && plant.currentHealth > 0) {
+                    plant.currentHealth -= zombieDmg;
+                    this.log(`${zombie.name} Doublestrike hit ${plant.name} again for ${zombieDmg}!`, 'damage');
+                }
+
+                // Frenzy: bonus attack hero when unit dies
                 if (zombie.traits?.includes('frenzy') && plant.currentHealth <= 0) {
-                    this.state.enemy.hero.currentHP -= zombie.currentAttack;
-                    this.log(`${zombie.name} Frenzy hit hero!`, 'damage');
+                    this.state[enemies[zombie.owner]].hero.currentHP -= zombie.currentAttack;
+                    this.log(`${zombie.name} Frenzy hit hero for ${zombie.currentAttack}!`, 'damage');
                 }
                 if (plant.traits?.includes('frenzy') && zombie.currentHealth <= 0) {
-                    this.state.player.hero.currentHP -= plant.currentAttack;
-                    this.log(`${plant.name} Frenzy hit hero!`, 'damage');
+                    this.state[enemies[plant.owner]].hero.currentHP -= plant.currentAttack;
+                    this.log(`${plant.name} Frenzy hit hero for ${plant.currentAttack}!`, 'damage');
                 }
-            } else if (plant && !zombie) {
-                // Plant attacks hero
-                this.state.enemy.hero.currentHP -= plant.currentAttack;
+
+            } else if (plant && !zombie && !plant.frozen) {
+                // Plant attacks hero directly
                 if (plant.currentAttack > 0) {
+                    this.state.enemy.hero.currentHP -= plant.currentAttack;
                     this.log(`${plant.name} dealt ${plant.currentAttack} to ${this.state.enemy.hero.name}`, 'damage');
+                }
+                if (plant.traits?.includes('overshoot')) {
+                    const ov = parseInt(plant.traits.find(t => t.startsWith('overshoot_'))?.split('_')[1]) || 0;
+                    if (ov > 0) { this.state.enemy.hero.currentHP -= ov; this.log(`${plant.name} Overshoot dealt ${ov}!`, 'damage'); }
                 }
                 if (plant.abilities?.includes('on_hit_hero_plus_1_str')) {
                     plant.currentAttack += 1;
@@ -612,13 +707,74 @@ const Battle = {
                 if (plant.abilities?.includes('on_damage_heal_hero')) {
                     this.state.player.hero.currentHP = Math.min(this.state.player.hero.hp, this.state.player.hero.currentHP + plant.currentAttack);
                 }
-            } else if (!plant && zombie) {
-                // Zombie attacks hero
-                this.state.player.hero.currentHP -= zombie.currentAttack;
+
+            } else if (!plant && zombie && !zombie.frozen) {
+                // Zombie attacks hero directly
                 if (zombie.currentAttack > 0) {
+                    this.state.player.hero.currentHP -= zombie.currentAttack;
                     this.log(`${zombie.name} dealt ${zombie.currentAttack} to ${this.state.player.hero.name}`, 'damage');
                 }
+                if (zombie.traits?.includes('overshoot')) {
+                    const ov = parseInt(zombie.traits.find(t => t.startsWith('overshoot_'))?.split('_')[1]) || 0;
+                    if (ov > 0) { this.state.player.hero.currentHP -= ov; this.log(`${zombie.name} Overshoot dealt ${ov}!`, 'damage'); }
+                }
             }
+        }
+    },
+
+    startTurn() {
+        if (this.state.gameOver) return;
+        const s = this.state;
+        const playerZombie = this.isZombieHero(s.player.hero.id);
+
+        s.phase = 'zombies_play';
+        if (playerZombie) {
+            s.player.brains = s.player.maxBrains;
+            this.startOfTurnEffects('player');
+            this.log(`--- Turn ${s.turn}: Your Zombie Phase --- (🧠${s.player.brains})`);
+        } else {
+            s.enemy.brains = s.enemy.maxBrains;
+            this.startOfTurnEffects('enemy');
+            this.drawCard('enemy');
+            this.log(`--- Turn ${s.turn}: Enemy Zombie Phase ---`);
+            this.aiPlayCards();
+        }
+        this.updateUI();
+    },
+
+    advancePhase() {
+        if (this.state.gameOver) return;
+        const s = this.state;
+        const playerZombie = this.isZombieHero(s.player.hero.id);
+
+        if (s.phase === 'zombies_play') {
+            // End of zombie phase
+            this.endOfTurnEffects(playerZombie ? 'player' : 'enemy');
+            s.phase = 'plants_play';
+            if (!playerZombie) {
+                s.player.sun = s.player.maxSun;
+                this.startOfTurnEffects('player');
+                this.drawCard('player');
+                this.log(`--- Your Plant Phase --- (☀${s.player.sun})`);
+            } else {
+                s.enemy.sun = s.enemy.maxSun;
+                this.startOfTurnEffects('enemy');
+                this.drawCard('enemy');
+                this.log(`--- Enemy Plant Phase ---`);
+                this.aiPlayCards();
+            }
+            this.updateUI();
+        } else if (s.phase === 'plants_play') {
+            // End of plant phase
+            this.endOfTurnEffects(!playerZombie ? 'player' : 'enemy');
+            this.fightPhase();
+            this.cleanBoard();
+            if (s.gameOver) return;
+
+            s.turn++;
+            s.player.maxSun = Math.min(10, s.player.maxSun + 1);
+            s.enemy.maxBrains = Math.min(10, s.enemy.maxBrains + 1);
+            this.startTurn();
         }
     },
 
@@ -725,60 +881,40 @@ const Battle = {
 
     endTurn() {
         if (this.state.gameOver) return;
-
-        // End of turn effects for player
-        this.endOfTurnEffects('player');
-
-        // Enemy turn (AI)
-        this.state.turn++;
-        this.state.enemy.maxBrains = Math.min(10, this.state.enemy.maxBrains + 1);
-        this.state.enemy.brains = this.state.enemy.maxBrains;
-
-        this.startOfTurnEffects('enemy');
-        this.drawCard('enemy');
-
-        this.log(`--- Turn ${this.state.turn}: Enemy Turn ---`);
-
-        // AI plays cards
-        this.aiPlayCards();
-
-        // Enemy fight
-        this.enemyFight();
-
-        this.endOfTurnEffects('enemy');
-
-        // Back to player
-        this.state.player.maxSun = Math.min(10, this.state.player.maxSun + 1);
-        this.state.player.sun = this.state.player.maxSun;
-        this.startOfTurnEffects('player');
-        this.drawCard('player');
-
-        this.log(`--- Turn ${this.state.turn}: Your Turn --- (☀${this.state.player.sun})`);
-        this.updateUI();
+        this.advancePhase();
     },
 
     aiPlayCards() {
-        const enemy = this.state.enemy;
+        const s = this.state;
         const diff = this.aiDifficulty;
         const maxPlays = diff === 'easy' ? 1 : diff === 'medium' ? 2 : 3;
+        const aiZombie = this.isZombieHero(s.enemy.hero.id);
 
-        let plays = 0;
-        // Sort hand by cost descending for harder AI
-        const sortedHand = [...enemy.hand].sort((a, b) => {
+        const resource = s.phase === 'zombies_play' ? s.enemy.brains : s.enemy.sun;
+        const sortedHand = [...s.enemy.hand].sort((a, b) => {
             if (diff === 'hard') return (b.cost || 0) - (a.cost || 0);
             return Math.random() - 0.5;
         });
 
+        let plays = 0;
         for (const card of sortedHand) {
             if (plays >= maxPlays) break;
-            if ((card.cost || 0) > enemy.brains) continue;
+            if ((card.cost || 0) > resource) continue;
 
-            // Find empty lane or best lane
             let targetLane = -1;
-            if (card.type === 'zombie') {
-                const emptyLanes = this.state.board
-                    .map((s, i) => ({ s, i }))
-                    .filter(({ s }) => !s.zombie)
+
+            if (card.type === 'zombie' && s.phase === 'zombies_play') {
+                const emptyLanes = s.board
+                    .map((sl, i) => ({ sl, i }))
+                    .filter(({ sl }) => !sl.zombie)
+                    .map(({ i }) => i);
+                if (emptyLanes.length > 0) {
+                    targetLane = emptyLanes[Math.floor(Math.random() * emptyLanes.length)];
+                }
+            } else if (card.type === 'plant' && s.phase === 'plants_play') {
+                const emptyLanes = s.board
+                    .map((sl, i) => ({ sl, i }))
+                    .filter(({ sl }) => !sl.plant)
                     .map(({ i }) => i);
                 if (emptyLanes.length > 0) {
                     targetLane = emptyLanes[Math.floor(Math.random() * emptyLanes.length)];
@@ -788,34 +924,10 @@ const Battle = {
             }
 
             if (targetLane >= 0) {
-                const handIndex = enemy.hand.indexOf(card);
+                const handIndex = s.enemy.hand.indexOf(card);
                 if (handIndex >= 0) {
                     this.playCard('enemy', handIndex, targetLane);
                     plays++;
-                }
-            }
-        }
-    },
-
-    enemyFight() {
-        for (let i = 0; i < 5; i++) {
-            const slot = this.state.board[i];
-            if (!slot || !slot.zombie || slot.zombie.owner !== 'enemy') continue;
-            if (slot.zombie.frozen) {
-                slot.zombie.frozen = false;
-                this.log(`${slot.zombie.name} is frozen!`);
-                continue;
-            }
-
-            const zombie = slot.zombie;
-            if (slot.plant) {
-                slot.plant.currentHealth -= zombie.currentAttack;
-                zombie.currentHealth -= slot.plant.currentAttack;
-                this.log(`${zombie.name} attacked ${slot.plant.name} for ${zombie.currentAttack}`, 'damage');
-            } else {
-                this.state.player.hero.currentHP -= zombie.currentAttack;
-                if (zombie.currentAttack > 0) {
-                    this.log(`${zombie.name} hit ${this.state.player.hero.name} for ${zombie.currentAttack}!`, 'damage');
                 }
             }
         }
@@ -855,20 +967,28 @@ const Battle = {
     updateUI() {
         if (!this.state) return;
         const s = this.state;
+        const playerZombie = this.isZombieHero(s.player.hero.id);
+        const myResource = playerZombie ? s.player.brains : s.player.sun;
+        const myMaxResource = playerZombie ? s.player.maxBrains : s.player.maxSun;
+        const resourceLabel = playerZombie ? 'Brains' : 'Sun';
 
-        // Hero info
         document.getElementById('player-hero-portrait').innerHTML = `<img src="${s.player.hero.img || ''}" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:50%" onerror="this.parentElement.textContent='${s.player.hero.icon||'?'}'">`;
         document.getElementById('player-hero-name').textContent = s.player.hero.name;
         document.getElementById('player-hero-hp').textContent = `${Math.max(0, s.player.hero.currentHP)}/${s.player.hero.hp}`;
-        document.getElementById('player-sun').textContent = `Sun: ${s.player.sun}/${s.player.maxSun}`;
+        document.getElementById('player-sun').textContent = `${resourceLabel}: ${myResource}/${myMaxResource}`;
 
         document.getElementById('enemy-hero-portrait').innerHTML = `<img src="${s.enemy.hero.img || ''}" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:50%" onerror="this.parentElement.textContent='${s.enemy.hero.icon||'?'}'">`;
         document.getElementById('enemy-hero-name').textContent = s.enemy.hero.name;
         document.getElementById('enemy-hero-hp').textContent = `${Math.max(0, s.enemy.hero.currentHP)}/${s.enemy.hero.hp}`;
-        document.getElementById('enemy-brains').textContent = `Brains: ${s.enemy.brains}/${s.enemy.maxBrains}`;
+        const enemyZombie = this.isZombieHero(s.enemy.hero.id);
+        const enemyResource = enemyZombie ? s.enemy.brains : s.enemy.sun;
+        const enemyMax = enemyZombie ? s.enemy.maxBrains : s.enemy.maxSun;
+        document.getElementById('enemy-brains').textContent = `${enemyZombie ? 'Brains' : 'Sun'}: ${enemyResource}/${enemyMax}`;
 
         document.getElementById('turn-counter').textContent = `Turn ${s.turn}`;
-        document.getElementById('phase-indicator').textContent = `Your Turn`;
+        const phaseLabel = s.phase === 'zombies_play' ? 'Zombie Phase' : 'Plant Phase';
+        const isMyPhase = (s.phase === 'zombies_play' && playerZombie) || (s.phase === 'plants_play' && !playerZombie);
+        document.getElementById('phase-indicator').textContent = isMyPhase ? `Your ${phaseLabel}` : `Enemy ${phaseLabel}`;
 
         // Board
         s.board.forEach((slot, i) => {
@@ -879,7 +999,7 @@ const Battle = {
                 plantSlot.innerHTML = '';
                 if (slot.plant) {
                     plantSlot.innerHTML = this.renderBoardCard(slot.plant);
-                } else {
+                } else if (isMyPhase && s.phase === 'plants_play') {
                     plantSlot.className = 'plant-slot valid-target';
                 }
             }
@@ -887,6 +1007,8 @@ const Battle = {
                 zombieSlot.innerHTML = '';
                 if (slot.zombie) {
                     zombieSlot.innerHTML = this.renderBoardCard(slot.zombie);
+                } else if (isMyPhase && s.phase === 'zombies_play') {
+                    zombieSlot.className = 'zombie-slot valid-target';
                 }
             }
         });
@@ -896,9 +1018,12 @@ const Battle = {
         handContainer.innerHTML = '';
         s.player.hand.forEach((card, i) => {
             const el = document.createElement('div');
-            const canPlay = card.cost <= s.player.sun && ((card.type === 'plant' && this.state.board.some(sl => !sl.plant)) ||
-                (card.type === 'zombie' && false) ||
-                (card.type === 'trick'));
+            let canPlay = card.cost <= myResource;
+            if (card.type === 'plant') canPlay = canPlay && s.phase === 'plants_play' && s.board.some(sl => !sl.plant);
+            else if (card.type === 'zombie') canPlay = canPlay && s.phase === 'zombies_play' && s.board.some(sl => !sl.zombie);
+            else if (card.type === 'trick') canPlay = canPlay && isMyPhase;
+            else canPlay = false;
+
             el.className = `card card-${card.type} ${canPlay ? 'playable' : ''}`;
             el.innerHTML = `
                 <div class="card-cost" style="background:${CARD_DATA.classColors[card.class] || '#666'}">${card.cost}</div>
@@ -913,7 +1038,9 @@ const Battle = {
                 </div>` : ''}
             `;
             if (canPlay && card.type === 'plant') {
-                el.addEventListener('click', () => this.promptPlayPlant(i));
+                el.addEventListener('click', () => this.promptPlay(i, 'plant'));
+            } else if (canPlay && card.type === 'zombie') {
+                el.addEventListener('click', () => this.promptPlay(i, 'zombie'));
             } else if (canPlay && card.type === 'trick') {
                 el.addEventListener('click', () => this.promptPlayTrick(i));
             }
@@ -930,8 +1057,18 @@ const Battle = {
             enemyHandContainer.appendChild(el);
         });
 
-        // Setup click handlers on board slots
+        // Click handlers on valid board slots
         document.querySelectorAll('.plant-slot.valid-target').forEach(slot => {
+            slot.onclick = () => {
+                if (this._pendingPlay !== undefined) {
+                    const lane = parseInt(slot.dataset.lane);
+                    this.playCard('player', this._pendingPlay, lane);
+                    this._pendingPlay = undefined;
+                    this.updateUI();
+                }
+            };
+        });
+        document.querySelectorAll('.zombie-slot.valid-target').forEach(slot => {
             slot.onclick = () => {
                 if (this._pendingPlay !== undefined) {
                     const lane = parseInt(slot.dataset.lane);
@@ -957,9 +1094,10 @@ const Battle = {
         </div>`;
     },
 
-    promptPlayPlant(handIndex) {
+    promptPlay(handIndex, cardType) {
         this._pendingPlay = handIndex;
-        DeckBuilder.showToast('Click an empty plant slot on the board', 'info');
+        const label = cardType === 'plant' ? 'plant slot' : 'zombie slot';
+        DeckBuilder.showToast(`Click an empty ${label} on the board`, 'info');
     },
 
     promptPlayTrick(handIndex) {
