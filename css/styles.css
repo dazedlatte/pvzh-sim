@@ -365,6 +365,11 @@ main {
     letter-spacing: -0.02em;
 }
 
+.trait-icon svg {
+    display: block;
+    flex-shrink: 0;
+}
+
 .trait-icon.trait-strikethrough { background: rgba(251,191,36,0.35); color: #fbbf24; }
 .trait-icon.trait-anti-hero { background: rgba(239,68,68,0.35); color: #f87171; }
 .trait-icon.trait-frenzy { background: rgba(239,68,68,0.35); color: #f87171; }
@@ -386,6 +391,11 @@ main {
 .board-card .trait-icon {
     font-size: 0.5rem;
     padding: 0 2px;
+}
+
+.board-card .trait-icon svg {
+    width: 10px;
+    height: 10px;
 }
 
 .card-rarity {

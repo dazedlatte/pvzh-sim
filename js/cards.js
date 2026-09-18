@@ -761,19 +761,19 @@ const CARD_DATA = {
 };
 
 const TRAIT_ICONS = {
-    'strikethrough': { icon: '⚔', label: 'Strikethrough', cssClass: 'trait-strikethrough' },
-    'anti_hero': { icon: '🎯', label: 'Anti-Hero', cssClass: 'trait-anti-hero' },
-    'frenzy': { icon: '💥', label: 'Frenzy', cssClass: 'trait-frenzy' },
-    'bullseye': { icon: '◎', label: 'Bullseye', cssClass: 'trait-bullseye' },
-    'amphibious': { icon: '🌊', label: 'Amphibious', cssClass: 'trait-amphibious' },
-    'team-up': { icon: '⊞', label: 'Team-Up', cssClass: 'trait-team-up' },
-    'armored': { icon: '🛡', label: 'Armored', cssClass: 'trait-armored' },
-    'gravestone': { icon: '🪦', label: 'Gravestone', cssClass: 'trait-gravestone' },
-    'untrickable': { icon: '✋', label: 'Untrickable', cssClass: 'trait-untrickable' },
-    'hunt': { icon: '🔍', label: 'Hunt', cssClass: 'trait-hunt' },
-    'doublestrike': { icon: '⚡', label: 'Doublestrike', cssClass: 'trait-doublestrike' },
-    'overshoot': { icon: '🏹', label: 'Overshoot', cssClass: 'trait-overshoot' },
-    'deadly': { icon: '☠', label: 'Deadly', cssClass: 'trait-deadly' }
+    'strikethrough': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><line x1="2" y1="18" x2="18" y2="2" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"/></svg>', label: 'Strikethrough', cssClass: 'trait-strikethrough' },
+    'anti_hero': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="1.5" fill="currentColor"/><line x1="10" y1="0" x2="10" y2="4" stroke="currentColor" stroke-width="1.5"/><line x1="10" y1="16" x2="10" y2="20" stroke="currentColor" stroke-width="1.5"/><line x1="0" y1="10" x2="4" y2="10" stroke="currentColor" stroke-width="1.5"/><line x1="16" y1="10" x2="20" y2="10" stroke="currentColor" stroke-width="1.5"/></svg>', label: 'Anti-Hero', cssClass: 'trait-anti-hero' },
+    'frenzy': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><path d="M10 1 L13 7 L19 8 L14.5 12.5 L16 19 L10 15.5 L4 19 L5.5 12.5 L1 8 L7 7 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>', label: 'Frenzy', cssClass: 'trait-frenzy' },
+    'bullseye': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="10" cy="10" r="2" fill="currentColor"/></svg>', label: 'Bullseye', cssClass: 'trait-bullseye' },
+    'amphibious': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><path d="M1 14 Q5 10 10 14 Q15 18 19 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M1 9 Q5 5 10 9 Q15 13 19 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>', label: 'Amphibious', cssClass: 'trait-amphibious' },
+    'team-up': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><rect x="1" y="1" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>', label: 'Team-Up', cssClass: 'trait-team-up' },
+    'armored': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><path d="M10 1 L18 5 L18 12 Q18 17 10 19 Q2 17 2 12 L2 5 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><line x1="10" y1="7" x2="10" y2="14" stroke="currentColor" stroke-width="1.5"/><line x1="7" y1="10" x2="13" y2="10" stroke="currentColor" stroke-width="1.5"/></svg>', label: 'Armored', cssClass: 'trait-armored' },
+    'gravestone': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><path d="M5 18 L5 6 Q5 2 10 2 Q15 2 15 6 L15 18 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><line x1="8" y1="8" x2="12" y2="8" stroke="currentColor" stroke-width="1.5"/><line x1="10" y1="6" x2="10" y2="10" stroke="currentColor" stroke-width="1.5"/><line x1="7" y1="14" x2="13" y2="14" stroke="currentColor" stroke-width="1.2"/></svg>', label: 'Gravestone', cssClass: 'trait-gravestone' },
+    'untrickable': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="5" y1="5" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>', label: 'Untrickable', cssClass: 'trait-untrickable' },
+    'hunt': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><circle cx="10" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="14.5" y1="12.5" x2="18" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>', label: 'Hunt', cssClass: 'trait-hunt' },
+    'doublestrike': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><path d="M4 3 L10 10 L4 17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 3 L16 10 L10 17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>', label: 'Doublestrike', cssClass: 'trait-doublestrike' },
+    'overshoot': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><line x1="2" y1="10" x2="14" y2="10" stroke="currentColor" stroke-width="1.5"/><polyline points="10,5 16,10 10,15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>', label: 'Overshoot', cssClass: 'trait-overshoot' },
+    'deadly': { icon: '<svg viewBox="0 0 20 20" width="12" height="12"><circle cx="10" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7 12 L7 18 L10 16 L13 18 L13 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>', label: 'Deadly', cssClass: 'trait-deadly' }
 };
 
 function parseTrait(trait) {
